@@ -22,8 +22,7 @@ public class PersonaDB {
             this.email = email;
         }
 
-        public Persona(int id, String nombre, String email, String direccion, String telefono, String password) {
-            this.id = id;
+        public Persona(String nombre, String email, String direccion, String telefono, String password) {
             this.nombre = nombre;
             this.email = email;
             this.direccion = direccion;
@@ -107,7 +106,6 @@ public class PersonaDB {
 
                 while (rs.next()) {
                     usuarios.add(new Persona(
-                            rs.getInt("id"),
                             rs.getString("nombre"),
                             rs.getString("email"),
                             rs.getString("telefono"),
@@ -129,7 +127,6 @@ public class PersonaDB {
                 ResultSet rs = pstmt.executeQuery();
                 if (rs.next()) {
                     return new Persona(
-                            rs.getInt("id"),
                             rs.getString("nombre"),
                             rs.getString("email"),
                             rs.getString("telefono"),
