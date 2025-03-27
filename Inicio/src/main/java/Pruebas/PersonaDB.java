@@ -1,4 +1,4 @@
-package com.mycompany.inicio;
+package Pruebas;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package com.mycompany.inicio;
+package Interfaz;
 
 /**
  *
@@ -11,23 +11,23 @@ package com.mycompany.inicio;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 
 public class Inicio extends JFrame {
     private JPanel panelPrincipal;
-    private JButton inicioAdmin, clienteInicio, jButton1;
+    private JButton inicioAdmin, clienteInicio,  imagenInicio;
     private JLabel jLabel1;
 
     public Inicio() {
         
-        setTitle("Plataforma de Ventas en Línea");
+        setTitle("Plataforma de Ventas en Linea");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1100, 800);
         setLocationRelativeTo(null);
-        initComponents();
+        InicioTienda();
     }
 
-    private void initComponents() {
+    private void InicioTienda() {
         
         panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new BorderLayout());
@@ -38,15 +38,15 @@ public class Inicio extends JFrame {
         panelPrincipal.add(jLabel1, BorderLayout.NORTH);
 
        
-         jButton1 = new JButton();
+        imagenInicio = new JButton();
         
        
         ImageIcon icono = new ImageIcon("imagenes/inicioLogin.jpeg");
-        ImageIcon iconoEscalado = new ImageIcon(icono.getImage().getScaledInstance(700, 700, Image.SCALE_FAST));
+        ImageIcon iconoEscalado = new ImageIcon(icono.getImage().getScaledInstance(1100, 1100, Image.SCALE_FAST));
         
         
-        jButton1.setIcon(iconoEscalado);
-        panelPrincipal.add(jButton1, BorderLayout.CENTER);
+         imagenInicio.setIcon(iconoEscalado);
+        panelPrincipal.add(imagenInicio, BorderLayout.CENTER);
 
        
         JPanel panelBotones = new JPanel();
