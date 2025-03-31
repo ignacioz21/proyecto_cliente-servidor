@@ -1,6 +1,9 @@
 package ClasesModelos;
 
+import BaseDeDatos.UsuarioDAO;
+
 public class Usuario {
+    private int idUsuario;
     private String nombre, apellido, password;
     private boolean estado;
 
@@ -9,6 +12,14 @@ public class Usuario {
         this.apellido = apellido;
         this.password = password;
         this.estado = estado;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getNombre() {

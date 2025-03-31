@@ -1,8 +1,15 @@
 package ClasesModelos;
 
+import BaseDeDatos.ConexionDB;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Productos {
     private String nombre, descripcion;
-    private int idCategoria, idProveedor, stockActual, stockMinimo;
+    private int idCategoria, idProveedor, stockActual, stockMinimo, idProducto;
     private float precio, precioPromocional;
     private boolean estado;
 
@@ -17,6 +24,14 @@ public class Productos {
         this.precio = precio;
         this.precioPromocional = precioPromocional;
         this.estado = estado;
+    }
+
+    public int getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(int idProducto) {
+        this.idProducto = idProducto;
     }
 
     public String getNombre() {

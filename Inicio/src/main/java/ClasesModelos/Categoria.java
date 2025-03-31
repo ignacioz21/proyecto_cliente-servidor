@@ -1,6 +1,7 @@
 package ClasesModelos;
 
 public class Categoria {
+    private int idCategoria;
     private String nombre, descripcion;
     private boolean estado;
 
@@ -8,6 +9,14 @@ public class Categoria {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.estado = estado;
+    }
+
+    public int getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
     }
 
     public String getNombre() {
