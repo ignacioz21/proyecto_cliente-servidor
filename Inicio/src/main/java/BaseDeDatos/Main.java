@@ -1,14 +1,21 @@
 package BaseDeDatos;
 
 import ClasesModelos.Usuario;
+import Herramientas.Encripter;
 
 public class Main {
     public static void main(String[] args) {
-        Usuario andres = new Usuario("Andres", "Martinez", "1230912'309'12", true);
-        System.out.println(andres.getIdUsuario());
+        /*
+        Usuario lucia = new Usuario("lucia", "gutierrez", "'309'12", false);
+        System.out.println(lucia.getIdUsuario());
         UsuarioDAO a = new UsuarioDAO();
-        a.agregarUsuario(andres);
-        System.out.println(andres.getIdUsuario());
+        a.agregarUsuario(lucia);
+        System.out.println(lucia.getIdUsuario());
+         */
+        String a = Encripter.encriptar("pepito123");
+        System.out.println(a);
+        System.out.println(Encripter.desencriptar(a));
+
 
     }
 }
