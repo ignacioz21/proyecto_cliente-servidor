@@ -1,24 +1,14 @@
 package Pruebas;
 
-import Pruebas.*;
+import BaseDeDatos.UsuarioDAO;
+import ClasesModelos.Usuario;
 
 public class Main {
     public static void main(String[] args) {
-        /*
-        PersonaDB.Persona newPersona = new PersonaDB.Persona("Andres", "andres@gmail.com","Heredia", "60153619", "123456789");
-        PersonaDB dbPersona = new PersonaDB();
-
-        PersonaDB.Persona.crearUsuario(newPersona); //Crear usuario
-        PersonaDB.Persona.obtenerPersonas();
-        PersonaDB.Persona.buscarUsuarioPorID(newPersona.getId());
-        PersonaDB.Persona.actualizarUsuario(newPersona);
-        PersonaDB.Persona.eliminarUsuario(newPersona.getId());
-         */
-        String pass = "qazswszxexcdedcftrfvgtfvbhygvbhygbnhbnjuhnjijnkiojierhfalishdladhsfkadj";
-        String encr = Encripter.encriptar(pass);
-        String desencr = Encripter.desencriptar(encr);
-        System.out.println(encr);
-        System.out.println(desencr);
+        Usuario julieta = new Usuario("julieta", "Peraltez", "pepito123", true);
+        UsuarioDAO daoUsuario = new UsuarioDAO();
+        daoUsuario.agregarUsuario(julieta);
+        System.out.println(daoUsuario.convalidarSesion(julieta.getNombre(), julieta.getPassword()));
 
     }
 }
