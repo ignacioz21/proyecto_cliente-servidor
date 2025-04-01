@@ -8,7 +8,7 @@ public class Main {
         Usuario julieta = new Usuario("julieta", "Peraltez", "pepito123", true);
         UsuarioDAO daoUsuario = new UsuarioDAO();
         daoUsuario.agregarUsuario(julieta);
-        System.out.println(daoUsuario.convalidarSesion(julieta.getNombre(), julieta.getPassword()));
+        System.out.println(daoUsuario.convalidarSesion(julieta.getNombre(), "1234234234"));
 
     }
 }
