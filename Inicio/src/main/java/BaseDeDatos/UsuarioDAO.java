@@ -57,12 +57,12 @@ public class UsuarioDAO {
                 String passwordObtenidoEncriptado = rs.getString("password");
                 if (passwordObtenidoEncriptado != null) {
                     String desencriptado = Encripter.desencriptar(passwordObtenidoEncriptado);
-                    if (desencriptado.equals(passwordU)) {
+                    if (desencriptado.equals(passwordU) && Objects.equals(rs.getString("nombre"), nombreU)) {
                         acierto = true;
                     }
                 }
             }
-        } catch (SQLException | NullPointerException e) {
+        } catch (SQLException e) {
             System.out.println("Error al validar el usuario: " + e.getMessage());
         }
 
