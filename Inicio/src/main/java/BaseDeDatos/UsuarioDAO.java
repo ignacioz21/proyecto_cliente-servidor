@@ -12,15 +12,15 @@ import java.util.Objects;
 public class UsuarioDAO {
 
     public void agregarUsuario(Usuario nuevoUsuario){
+        Encripter encripter = new Encripter();
         String sql = "INSERT INTO usuario (nombre, apellido, password, estado) VALUES (?, ?, ?, ?)";
         String sqlID = "SELECT id_usuario FROM usuario WHERE nombre = ?";
-        String passwordEncriptada = Encripter.encriptar(nuevoUsuario.getPassword());
         try (Connection conex = ConexionDB.getConexion()) {
             PreparedStatement pstmt = conex.prepareStatement(sql);
 
             pstmt.setString(1, nuevoUsuario.getNombre());
             pstmt.setString(2, nuevoUsuario.getApellido());
-            pstmt.setString(3, passwordEncriptada);
+            pstmt.setString(3, encripter.encriptar(nuevoUsuario.getPassword()));
             pstmt.setBoolean(4, nuevoUsuario.isEstado());
             pstmt.executeUpdate();
             System.out.println("Usuario creado exitosamente");
@@ -43,32 +43,38 @@ public class UsuarioDAO {
         }
     }
 
-    public boolean convalidarSesion(String nombreU, String passwordU) {
-        String sql = "SELECT password FROM usuario WHERE nombre = ?";
-
-        try (Connection conex = ConexionDB.getConexion();
-             PreparedStatement pstmt = conex.prepareStatement(sql)) {
-
-            pstmt.setString(1, nombreU);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    String passwordEncriptada = rs.getString("password");
-                    String passwordDesencriptada = Encripter.desencriptar(passwordEncriptada);
-
-                    if (Objects.equals(passwordDesencriptada, passwordU)) {
-                        System.out.println("Usuario validado correctamente");
-                        return true;
-                    } else {
-                        System.out.println("Usuario o contraseña incorrectos");
-                    }
-                } else {
-                    System.out.println("Usuario no encontrado");
-                }
+    public boolean convalidarUsuario(String username) {
+        String sql = "SELECT nombre FROM usuario WHERE nombre = ?";
+        try (Connection conex = ConexionDB.getConexion(); PreparedStatement pstmt = conex.prepareStatement(sql)) {
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return true;
             }
         } catch (SQLException e) {
-            System.out.println("Error al validar el usuario: " + e.getMessage());
+            System.out.println("Error al verificar el usuario: " + e.getMessage());
         }
         return false;
     }
 
+    public boolean convalidarSesion(Usuario usuario) {
+        Encripter encripter = new Encripter();
+        System.out.println("Contraseña desde USUARIOA DAO: " + usuario.getPassword());
+        System.out.println("Contraseña desde USUARIOA DAO ENCRIPTADA: " + encripter.encriptar(usuario.getPassword()));
+        String sql = "SELECT nombre, password FROM usuario WHERE nombre = ? AND password = ?";
+        try (Connection conex = ConexionDB.getConexion(); PreparedStatement pstmt = conex.prepareStatement(sql)) {
+            pstmt.setString(1, usuario.getNombre());
+            pstmt.setString(2, encripter.encriptar(usuario.getPassword()));
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                System.out.println("Usuario y contraseña correctos");
+                return true;
+            }else{
+                System.out.println("Usuario o contraseña incorrectos");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al verificar la sesion: " + e.getMessage());
+        }
+        return false;
+    }
 }

@@ -20,6 +20,11 @@ public class Usuario {
         this.estado = true;
     }
 
+    public Usuario(String nombre, String contrasena) {
+        this.nombre = nombre;
+        this.password = contrasena;
+    }
+
     public int getIdUsuario() {
         return idUsuario;
     }

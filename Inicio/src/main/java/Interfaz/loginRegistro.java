@@ -11,16 +11,43 @@ package Interfaz;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import BaseDeDatos.UsuarioDAO; 
+import java.util.Arrays;
+
+import BaseDeDatos.UsuarioDAO;
 import ClasesModelos.Usuario;
 import Herramientas.Encripter;
 
 public class loginRegistro extends JFrame {
     private JPanel panelPrincipal;
     private JTextField solicitudNombre, solicitudApellido;
-    private JPasswordField solicitudContrasena;
+    private JTextField solicitudContrasena;
     private JButton botonRegistrar;
-    private JButton botonVolver; 
+    private JButton botonVolver;
+    String nombre, apellido, contrasena;
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
 
     public loginRegistro() {
         setTitle("Registro de Plataforma de tienda en Linea");
@@ -48,7 +75,7 @@ public class loginRegistro extends JFrame {
         panelPrincipal.add(lblNombre);
         panelPrincipal.add(solicitudNombre);
 
-        JLabel lblCorreo = new JLabel("Appelido:");
+        JLabel lblCorreo = new JLabel("Apelido:");
         lblCorreo.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         lblCorreo.setBounds(150, 130, 100, 30);
         solicitudApellido = new JTextField();
@@ -84,25 +111,26 @@ public class loginRegistro extends JFrame {
     }
 
     private void registrarUsuario(ActionEvent evt) {
-        String nombre = solicitudNombre.getText();
-        String apellido = solicitudApellido.getText();
-        String contrasena = new String(solicitudContrasena.getPassword());
-        
-        if (nombre.isEmpty() || apellido.isEmpty() || contrasena.isEmpty()) {
-            JOptionPane.showMessageDialog(null, " Llene los campos son obligatorios");
-            return;
+        setNombre(solicitudNombre.getText());
+        setApellido(solicitudApellido.getText());
+        setContrasena(solicitudContrasena.getText());
+        System.out.println("Nombre: " + getNombre());
+        System.out.println("Apellido: " + getApellido());
+        System.out.println("Contrasena: " + getContrasena());
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        if (getNombre().isEmpty() || getApellido().isEmpty() || getContrasena().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.");
+        } else if (usuarioDAO.convalidarUsuario(nombre)) {
+            JOptionPane.showMessageDialog(this, "El nombre de usuario ya existe. Por favor, elija otro.");
         } else {
-            UsuarioDAO usuarioDAO = new UsuarioDAO();
             Usuario nuevoUsuario = new Usuario();
-
-            nuevoUsuario.setNombre(nombre);
-            nuevoUsuario.setApellido(apellido);
-            nuevoUsuario.setPassword(Encripter.encriptar(contrasena));
+            nuevoUsuario.setNombre(getNombre());
+            nuevoUsuario.setApellido(getApellido());
+            nuevoUsuario.setPassword(getContrasena());
             usuarioDAO.agregarUsuario(nuevoUsuario);
-            JOptionPane.showMessageDialog(null, "Usuario registrado con éxito.");
+            JOptionPane.showMessageDialog(this, "Usuario registrado exitosamente.");
             volverALoginCliente();
         }
-
 
 
     }
