@@ -13,6 +13,12 @@ public class Usuario {
         this.password = password;
         this.estado = estado;
     }
+    public Usuario() {
+        this.nombre = "";
+        this.apellido = "";
+        this.password = "";
+        this.estado = true;
+    }
 
     public int getIdUsuario() {
         return idUsuario;

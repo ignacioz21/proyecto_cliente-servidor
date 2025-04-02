@@ -44,29 +44,31 @@ public class UsuarioDAO {
     }
 
     public boolean convalidarSesion(String nombreU, String passwordU) {
-        String sql = "SELECT nombre, password FROM usuario WHERE nombre = ?";
-        boolean acierto = false;
+        String sql = "SELECT password FROM usuario WHERE nombre = ?";
 
         try (Connection conex = ConexionDB.getConexion();
              PreparedStatement pstmt = conex.prepareStatement(sql)) {
 
             pstmt.setString(1, nombreU);
-            ResultSet rs = pstmt.executeQuery();
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    String passwordEncriptada = rs.getString("password");
+                    String passwordDesencriptada = Encripter.desencriptar(passwordEncriptada);
 
-            if (rs.next()) {
-                String passwordObtenidoEncriptado = rs.getString("password");
-                if (passwordObtenidoEncriptado != null) {
-                    String desencriptado = Encripter.desencriptar(passwordObtenidoEncriptado);
-                    if (desencriptado.equals(passwordU) && Objects.equals(rs.getString("nombre"), nombreU)) {
-                        acierto = true;
+                    if (Objects.equals(passwordDesencriptada, passwordU)) {
+                        System.out.println("Usuario validado correctamente");
+                        return true;
+                    } else {
+                        System.out.println("Usuario o contraseña incorrectos");
                     }
+                } else {
+                    System.out.println("Usuario no encontrado");
                 }
             }
         } catch (SQLException e) {
             System.out.println("Error al validar el usuario: " + e.getMessage());
         }
-
-        return acierto;
+        return false;
     }
 
 }

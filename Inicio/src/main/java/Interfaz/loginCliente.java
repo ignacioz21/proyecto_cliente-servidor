@@ -7,13 +7,17 @@ package Interfaz;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import BaseDeDatos.UsuarioDAO; 
+import ClasesModelos.Usuario;
+import Herramientas.Encripter;
 
 public class loginCliente extends JFrame {
     private JPanel panelPrincipal;
     private JTextField txtUsuario;
     private JPasswordField txtContrasena;
-    private JCheckBox chkRecordar;
+    private JCheckBox botonRecordar;
     private JButton btnIniciar;
+    private JButton btnRegistro;
 
     public loginCliente() {
         setTitle("Plataforma de tienda en Linea");
@@ -32,6 +36,7 @@ public class loginCliente extends JFrame {
         panelTitulo.setBackground(new Color(220, 220, 220));
         JLabel lblTitulo = new JLabel("Bienvenidos a Plataforma de tienda en Linea", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Segoe UI Light", Font.BOLD, 24));
+        panelTitulo.setBackground(new Color(0, 51, 204));
         panelTitulo.add(lblTitulo);
         panelPrincipal.add(panelTitulo, BorderLayout.NORTH);
 
@@ -40,35 +45,44 @@ public class loginCliente extends JFrame {
         panelCentral.setBackground(new Color(220, 220, 220));
 
         JLabel lblUsuario = new JLabel("Usuario:");
+        lblUsuario.setBackground(new Color(0, 51, 204));
         lblUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         lblUsuario.setBounds(150, 100, 100, 30);
-
         txtUsuario = new JTextField();
         txtUsuario.setBounds(250, 100, 300, 30);
+        panelCentral.add(lblUsuario);
+        panelCentral.add(txtUsuario);
 
-        JLabel lblContrasena = new JLabel("Contraseña:");
+        JLabel lblContrasena = new JLabel("Contrasena:");
+        lblContrasena.setBackground(new Color(0, 51, 204));
         lblContrasena.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         lblContrasena.setBounds(150, 150, 100, 30);
-
         txtContrasena = new JPasswordField();
         txtContrasena.setBounds(250, 150, 300, 30);
+        panelCentral.add(lblContrasena);
+        panelCentral.add(txtContrasena);
 
-        chkRecordar = new JCheckBox("Recordar Contraseña");
-        chkRecordar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        chkRecordar.setBounds(250, 190, 200, 30);
-        chkRecordar.setBackground(new Color(220, 220, 220));
+        botonRecordar = new JCheckBox("Recordar Contrasena");
+        botonRecordar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        botonRecordar.setBounds(250, 190, 200, 30);
+        botonRecordar.setBackground(new Color(0, 51, 204));
+        panelCentral.add(botonRecordar);
 
         btnIniciar = new JButton("Iniciar Sesion");
         btnIniciar.setFont(new Font("Segoe UI", Font.BOLD, 16));
         btnIniciar.setBounds(330, 230, 150, 40);
-        btnIniciar.addActionListener(evt -> loginActionPerformed(evt));
-
-        panelCentral.add(lblUsuario);
-        panelCentral.add(txtUsuario);
-        panelCentral.add(lblContrasena);
-        panelCentral.add(txtContrasena);
-        panelCentral.add(chkRecordar);
+        btnIniciar.setBackground(new Color(0, 51, 204));
+        btnIniciar.setForeground(Color.WHITE);
+        btnIniciar.addActionListener(evt -> loginUsuario(evt));
         panelCentral.add(btnIniciar);
+
+        btnRegistro = new JButton("Registrarse");
+        btnRegistro.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        btnRegistro.setBounds(330, 280, 150, 40);
+        btnRegistro.setBackground(new Color(0, 51, 204));
+        btnRegistro.setForeground(Color.WHITE);
+        btnRegistro.addActionListener(evt -> abrirRegistro(evt));
+        panelCentral.add(btnRegistro);
 
         panelPrincipal.add(panelCentral, BorderLayout.CENTER);
 
@@ -80,18 +94,22 @@ public class loginCliente extends JFrame {
         add(panelPrincipal);
     }
 
-    private void loginActionPerformed(ActionEvent evt) {
+    private void loginUsuario(ActionEvent evt) {
         String usuario = txtUsuario.getText();
         String contrasena = new String(txtContrasena.getPassword());
 
-        if (usuario.equals("cliente") && contrasena.equals("1234")) {
-
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        if (usuarioDAO.convalidarSesion(usuario, contrasena)) {
             new InicioCompras().setVisible(true);
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos",
-                    "Error de autenticacion", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Usuario o contrasena incorrectos");
         }
+    }
+
+    private void abrirRegistro(ActionEvent evt) {
+        new loginRegistro().setVisible(true); 
+        this.dispose(); 
     }
 
     public static void main(String[] args) {

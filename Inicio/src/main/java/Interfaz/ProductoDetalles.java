@@ -11,22 +11,22 @@ package Interfaz;
 
 import javax.swing.*;
 import java.awt.*;
-
 import java.util.ArrayList;
+import ClasesModelos.Productos; 
 
 class ProductoDetalles extends JFrame {
-    private Producto producto;
-    private static ArrayList<Producto> carrito = new ArrayList<>();
+    private Productos producto; 
+    private static ArrayList<Productos> carrito = new ArrayList<>();
     private JLabel quantityLabel;
     private int cantidad;
 
-    public ProductoDetalles(Producto producto) {
+    public ProductoDetalles(Productos producto) {
         this.producto = producto;
-        this.cantidad = producto.getCantidad();
-        initComponents();
+        this.cantidad = 1; 
+        InterfazDetalles();
     }
 
-    private void initComponents() {
+    private void InterfazDetalles() {
         setTitle("Detalles del Producto");
         setSize(400, 300);
         setLocationRelativeTo(null);
@@ -36,10 +36,10 @@ class ProductoDetalles extends JFrame {
         panel.setLayout(new BorderLayout());
 
         JLabel nameLabel = new JLabel("Nombre: " + producto.getNombre(), JLabel.CENTER);
-        JLabel priceLabel = new JLabel("Precio: $" + producto.getPrecio(), JLabel.CENTER);
+        JLabel priceLabel = new JLabel("Precio: " + producto.getPrecio(), JLabel.CENTER);
         quantityLabel = new JLabel("Cantidad: " + cantidad, JLabel.CENTER);
 
-        JButton changeQuantityButton = new JButton("Cantidad");
+        JButton changeQuantityButton = new JButton("Cambiar Cantidad");
         changeQuantityButton.addActionListener(e -> cambiarCantidad());
 
         JButton addToCartButton = new JButton("Agregar al Carrito");
@@ -58,32 +58,43 @@ class ProductoDetalles extends JFrame {
     }
 
     private void cambiarCantidad() {
-        String nuevaCantidad = JOptionPane.showInputDialog(this, "Ingrese nueva cantidad:", cantidad);
+        String nuevaCantidad = JOptionPane.showInputDialog(this, "Ingrese la cantidad que desea :", cantidad);
         try {
             int cantidadIngresada = Integer.parseInt(nuevaCantidad);
             if (cantidadIngresada > 0) {
-                // Verificar si la cantidad ingresada es mayor que la cantidad disponible
-                if (cantidadIngresada > producto.getCantidad()) {
-                    JOptionPane.showMessageDialog(this, "No hay suficiente stock. Solo hay " + producto.getCantidad() + " disponibles.", "Stock Insuficiente", JOptionPane.WARNING_MESSAGE);
+                
+                if (cantidadIngresada > producto.getStockActual()) { 
+                    JOptionPane.showMessageDialog(this, "No hay suficiente stock. Solo hay " + producto.getStockActual() + " disponibles ");
                 } else {
                     cantidad = cantidadIngresada;
                     quantityLabel.setText("Cantidad: " + cantidad);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Ingrese un número válido.");
+                JOptionPane.showMessageDialog(this, " No tenemos esa cantidad ");
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un número válido.");
+            JOptionPane.showMessageDialog(this, "No tenemos esa cantidad ");
         }
     }
 
     private void agregarAlCarrito() {
-        producto.setCantidad(cantidad);
-        carrito.add(producto);
+       
+        Productos productoCarrito = new Productos(
+            producto.getNombre(),
+            producto.getDescripcion(),
+            producto.getIdCategoria(),
+            producto.getIdProveedor(),
+            cantidad, 
+            producto.getStockMinimo(),
+            producto.getPrecio(),
+            producto.getPrecioPromocional(),
+            producto.isEstado()
+        );
+        carrito.add(productoCarrito);
         JOptionPane.showMessageDialog(this, "Producto agregado al carrito");
     }
 
-    public static ArrayList<Producto> getCarrito() {
+    public static ArrayList<Productos> getCarrito() {
         return carrito;
     }
 
