@@ -10,6 +10,9 @@ public class Proveedor {
         this.estado = estado;
     }
 
+    public Proveedor() {
+    }
+
     public int getIdEmpresa() {
         return idEmpresa;
     }

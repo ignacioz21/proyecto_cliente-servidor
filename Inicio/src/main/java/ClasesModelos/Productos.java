@@ -8,10 +8,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Productos {
-    private String nombre, descripcion;
+    private String nombre, descripcion, categoria;
     private int idCategoria, idProveedor, stockActual, stockMinimo, idProducto;
     private float precio, precioPromocional;
     private boolean estado;
+
+    public Productos() {
+    }
 
     public Productos(String nombre, String descripcion, int idCategoria, int idProveedor, int stockActual,
                      int stockMinimo, float precio, float precioPromocional, boolean estado) {
@@ -104,5 +107,30 @@ public class Productos {
 
     public void setEstado(boolean estado) {
         this.estado = estado;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    @Override
+    public String toString() {
+        return "Productos{" +
+                "nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", categoria='" + categoria + '\'' +
+                ", idCategoria=" + idCategoria +
+                ", idProveedor=" + idProveedor +
+                ", stockActual=" + stockActual +
+                ", stockMinimo=" + stockMinimo +
+                ", idProducto=" + idProducto +
+                ", precio=" + precio +
+                ", precioPromocional=" + precioPromocional +
+                ", estado=" + estado +
+                '}';
     }
 }

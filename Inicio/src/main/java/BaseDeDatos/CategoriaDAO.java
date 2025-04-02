@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CategoriaDAO {
 
@@ -36,5 +38,23 @@ public class CategoriaDAO {
             System.out.println("Error al otorgar el ID a la categoria: " + nuevaCategoria.getNombre());
             System.out.println(e.getMessage());
         }
+    }
+    public List<Categoria> mostrarCategorias() {
+        String sql = "SELECT * FROM categoria";
+        List<Categoria> categorias = new ArrayList<>();
+        try (Connection conex = ConexionDB.getConexion(); PreparedStatement pstmt = conex.prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Categoria categoria = new Categoria();
+                categoria.setIdCategoria(rs.getInt("id_categoria"));
+                categoria.setNombre(rs.getString("nombre"));
+                categoria.setDescripcion(rs.getString("descripcion"));
+                categoria.setEstado(rs.getBoolean("estado"));
+                categorias.add(categoria);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al mostrar las categorias: " + e.getMessage());
+        }
+        return categorias;
     }
 }

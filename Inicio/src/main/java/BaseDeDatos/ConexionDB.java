@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConexionDB {
-    private static final String URL = "jdbc:mysql://localhost:3306/pulpeDB";
+    private static final String URL = "jdbc:mysql://localhost:3306/mydb";
     private static final String PASSWORD = "123456789";
     private static final String HOST = "root";
 

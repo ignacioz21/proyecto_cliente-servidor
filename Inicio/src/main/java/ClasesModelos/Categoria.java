@@ -11,6 +11,9 @@ public class Categoria {
         this.estado = estado;
     }
 
+    public Categoria() {
+    }
+
     public int getIdCategoria() {
         return idCategoria;
     }
@@ -41,5 +44,15 @@ public class Categoria {
 
     public void setEstado(boolean estado) {
         this.estado = estado;
+    }
+
+    @Override
+    public String toString() {
+        return "Categoria{" +
+                "idCategoria=" + idCategoria +
+                ", nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", estado=" + estado +
+                '}';
     }
 }

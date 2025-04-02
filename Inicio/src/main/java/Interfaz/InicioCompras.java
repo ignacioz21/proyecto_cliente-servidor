@@ -5,14 +5,22 @@
 
 package Interfaz;
 
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import BaseDeDatos.CategoriaDAO;
+import BaseDeDatos.ProductoDAO;
+import ClasesModelos.Categoria;
+import ClasesModelos.Productos;
+
 public class InicioCompras extends JFrame {
-    private ArrayList<Producto> catalogoProductos;
+    private List<Productos> catalogoProductos; 
     private JPanel panelProductos;
     private JComboBox<String> filtroCategoria;
     private JComboBox<String> filtroPrecio;
@@ -24,32 +32,33 @@ public class InicioCompras extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
+        filtros();
         inicializarCatalogo();
-        crearPanelFiltros();
         crearPanelProductos();
         crearBotonCarrito();
     }
 
     private void inicializarCatalogo() {
-        catalogoProductos = new ArrayList<>();
-        
-        catalogoProductos.add(new Producto("iPhone 13", 799.99, 10, "Smartphone de Apple", "Smartphones"));
-        catalogoProductos.add(new Producto("Samsung Galaxy S21", 699.99, 15, "Smartphone Samsung", "Smartphones"));
-        catalogoProductos.add(new Producto("MacBook Pro", 1299.99, 5, "Laptop de Apple", "Laptops"));
-        catalogoProductos.add(new Producto("Dell XPS", 1099.99, 8, "Laptop Dell", "Laptops"));
-        catalogoProductos.add(new Producto("iPad Pro", 799.99, 12, "Tablet de Apple", "Tablets"));
-        catalogoProductos.add(new Producto("Samsung Galaxy Tab", 549.99, 7, "Tablet Samsung", "Tablets"));
+        ProductoDAO productoDAO = new ProductoDAO();
+        catalogoProductos = productoDAO.mostrarProductos();
     }
 
-    private void crearPanelFiltros() {
+    private void filtros() {
         JPanel panelFiltros = new JPanel();
-        
-        String[] categorias = {"Todos", "Smartphones", "Laptops", "Tablets"};
-        filtroCategoria = new JComboBox<>(categorias);
+
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+
+        List<Categoria> categorias = categoriaDAO.mostrarCategorias();
+        String[] categoriasArray = new String[categorias.size()];
+
+        for (int i = 0; i < categorias.size(); i++) {
+            categoriasArray[i] = categorias.get(i).getNombre();
+        }
+        filtroCategoria = new JComboBox<>(categoriasArray);
         panelFiltros.add(new JLabel("Categoría:"));
         panelFiltros.add(filtroCategoria);
         
-        String[] rangosPrecio = {"Todos", "Menos de $500", "$500 - $1000", "Más de $1000"};
+        String[] rangosPrecio = {"Todos", "Menos de $500", "de $500 a $1000", "Mas de $1000"};
         filtroPrecio = new JComboBox<>(rangosPrecio);
         panelFiltros.add(new JLabel("Precio:"));
         panelFiltros.add(filtroPrecio);
@@ -64,6 +73,7 @@ public class InicioCompras extends JFrame {
         add(panelFiltros, BorderLayout.NORTH);
     }
 
+
     private void crearPanelProductos() {
         panelProductos = new JPanel();
         panelProductos.setLayout(new GridLayout(0, 3, 10, 10));
@@ -74,26 +84,26 @@ public class InicioCompras extends JFrame {
         add(scrollPane, BorderLayout.CENTER);
     }
 
-    private void mostrarProductos(List<Producto> productos) {
+    private void mostrarProductos(List<Productos> productos) {
         panelProductos.removeAll();
         
-        for (Producto producto : productos) {
+        for (Productos producto : productos) {
             JPanel panelProducto = new JPanel();
             panelProducto.setLayout(new BorderLayout());
             panelProducto.setBorder(BorderFactory.createLineBorder(Color.GRAY));
             
-            // Removed image loading and display
             JLabel lblNombre = new JLabel(producto.getNombre());
             JLabel lblPrecio = new JLabel(String.format("$%.2f", producto.getPrecio()));
             JLabel lblDescripcion = new JLabel(producto.getDescripcion());
+            JLabel lblCategoria = new JLabel("Categoria: " + producto.getCategoria());
             
             JButton btnVerDetalles = new JButton("Ver Detalles");
             btnVerDetalles.addActionListener(e -> {
-                if (producto.getCantidad() > 0) {
+                if (producto.getStockActual() > 0) { 
                     ProductoDetalles detalles = new ProductoDetalles(producto);
                     detalles.setVisible(true);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Producto agotado", "Sin Stock", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Producto agotado");
                 }
             });
             
@@ -102,6 +112,7 @@ public class InicioCompras extends JFrame {
             infoPanel.add(lblNombre);
             infoPanel.add(lblPrecio);
             infoPanel.add(lblDescripcion);
+            infoPanel.add(lblCategoria);
             
             panelProducto.add(infoPanel, BorderLayout.CENTER);
             panelProducto.add(btnVerDetalles, BorderLayout.SOUTH);
@@ -123,25 +134,26 @@ public class InicioCompras extends JFrame {
     }
 
     private void aplicarFiltros() {
-        List<Producto> productosFiltrados = catalogoProductos.stream()
-            .filter(p -> filtroCategoria.getSelectedItem().equals("Todos") || 
-                     p.getCategoria().equals(filtroCategoria.getSelectedItem()))
-            .filter(p -> {
-                String precioSeleccionado = (String) filtroPrecio.getSelectedItem();
-                switch(precioSeleccionado) {
-                    case "Menos de $500":
-                        return p.getPrecio() < 500;
-                    case "$500 - $1000":
-                        return p.getPrecio() >= 500 && p.getPrecio() <= 1000;
-                    case "Más de $1000":
-                        return p.getPrecio() > 1000;
-                    default:
-                        return true;
-                }
-            })
-            .filter(p -> !filtroDisponibilidad.isSelected() || p.getCantidad() > 0)
-            .collect(Collectors.toList());
-        
+        String categoriaSeleccionada = (String) filtroCategoria.getSelectedItem();
+        String rangoPrecioSeleccionado = (String) filtroPrecio.getSelectedItem();
+        boolean soloDisponibles = filtroDisponibilidad.isSelected();
+
+        List<Productos> productosFiltrados = catalogoProductos.stream()
+                .filter(producto -> categoriaSeleccionada.equals("Todos") || producto.getCategoria().equals(categoriaSeleccionada))
+                .filter(producto -> {
+                    switch (rangoPrecioSeleccionado) {
+                        case "Menos de $500":
+                            return producto.getPrecio() < 500;
+                        case "de $500 a $1000":
+                            return producto.getPrecio() >= 500 && producto.getPrecio() <= 1000;
+                        case "Mas de $1000":
+                            return producto.getPrecio() > 1000;
+                        default:
+                            return true;
+                    }
+                })
+                .filter(producto -> !soloDisponibles || producto.getStockActual() > 0)
+                .collect(Collectors.toList());
         mostrarProductos(productosFiltrados);
     }
 
