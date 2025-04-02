@@ -12,9 +12,9 @@ public class Main {
         a.agregarUsuario(lucia);
         System.out.println(lucia.getIdUsuario());
          */
-        String a = Encripter.encriptar("pepito123");
-        System.out.println(a);
-        System.out.println(Encripter.desencriptar(a));
+        // String a = Encripter.encriptar("pepito123");
+        // System.out.println(a);
+        // System.out.println(Encripter.desencriptar(a));
 
 
     }

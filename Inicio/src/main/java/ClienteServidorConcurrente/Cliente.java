@@ -6,12 +6,12 @@ import java.net.Socket;
 
 public class Cliente {
     private static final String HOST = "localhost";
-    private static final int PUERTO = 1234;
+    private static final int PUERTO = 5000;
     private Socket socket;
     private PrintWriter output;
     private BufferedReader input;
 
-    private void conectarServer (String host, int puerto) {
+    public void conectarServer (String host, int puerto) {
         try {
             socket = new Socket(host, puerto);
             output = new PrintWriter(socket.getOutputStream(), true);
@@ -27,7 +27,7 @@ public class Cliente {
         }
     }
 
-    private void enviarMensaje() {
+    public void enviarMensaje() {
         String msg = "A";
         output.println(msg);
         System.out.println("Se envio: " + msg);

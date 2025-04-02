@@ -7,9 +7,9 @@ package Interfaz;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import BaseDeDatos.UsuarioDAO; 
+import BaseDeDatos.UsuarioDAO;
 import ClasesModelos.Usuario;
-import Herramientas.Encripter;
+import javax.swing.JPasswordField;
 
 public class loginCliente extends JFrame {
     private JPanel panelPrincipal;
@@ -18,6 +18,23 @@ public class loginCliente extends JFrame {
     private JCheckBox botonRecordar;
     private JButton btnIniciar;
     private JButton btnRegistro;
+    String nombre, contrasena;
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
     public loginCliente() {
         setTitle("Plataforma de tienda en Linea");
@@ -95,15 +112,21 @@ public class loginCliente extends JFrame {
     }
 
     private void loginUsuario(ActionEvent evt) {
-        String usuario = txtUsuario.getText();
-        String contrasena = new String(txtContrasena.getPassword());
-
+        setNombre(txtUsuario.getText());
+        setContrasena(new String(txtContrasena.getPassword()));
+        System.out.println("Nombre: " + getNombre());
+        System.out.println("Contrasena: " + getContrasena());
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-        if (usuarioDAO.convalidarSesion(usuario, contrasena)) {
+        Usuario usuario = new Usuario(getNombre(), getContrasena());
+
+        if (nombre == null || contrasena == null || nombre.isEmpty() || contrasena.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese su nombre de usuario y contraseña.");
+            return;
+        }
+        if (usuarioDAO.convalidarSesion(usuario)) {
+            JOptionPane.showMessageDialog(this, "Bienvenido de vuelta! " + nombre);
             new InicioCompras().setVisible(true);
             this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "Usuario o contrasena incorrectos");
         }
     }
 

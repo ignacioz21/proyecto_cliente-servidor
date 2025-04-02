@@ -8,6 +8,7 @@ import ClasesModelos.Categoria;
 import ClasesModelos.Productos;
 import ClasesModelos.Proveedor;
 import ClasesModelos.Usuario;
+import Herramientas.Encripter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +60,7 @@ public class Main {
 
         Usuario usuario = new Usuario("b", "b", "b", true);
          */
-
+/*
         ProductoDAO daoProducto = new ProductoDAO();
         CategoriaDAO categoriaDAO = new CategoriaDAO();
         List<Productos> productos = daoProducto.mostrarProductos();
@@ -71,6 +72,11 @@ public class Main {
         for (Categoria categoria : categorias) {
             System.out.println(categoria.toString());
         }
-
+ */
+        Encripter encripter = new Encripter();
+        String enciptada = encripter.encriptar("pepito123");
+        String desencriptada = encripter.desencriptar(enciptada);
+        System.out.println("Encriptada: " + enciptada);
+        System.out.println("Desencriptada: " + desencriptada);
     }
 }
