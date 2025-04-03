@@ -1,20 +1,14 @@
 package Herramientas;
 
 import javax.crypto.*;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
 import java.security.*;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
 import java.util.Arrays;
 import java.util.Base64;
 
 public class Encripter {
 
     static String LLAVE = "HerediaCampeonUAUA";
-    private static final String SALT = "salespecifico123";
 
 
     public SecretKeySpec crearClave(String key) {

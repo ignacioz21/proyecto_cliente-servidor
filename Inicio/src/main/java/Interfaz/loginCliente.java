@@ -41,10 +41,10 @@ public class loginCliente extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 500);
         setLocationRelativeTo(null);
-        initComponents();
+       interfazCliente();
     }
 
-    private void initComponents() {
+    private void interfazCliente() {
         panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new BorderLayout());
         panelPrincipal.setBackground(new Color(220, 220, 220));
@@ -124,7 +124,7 @@ public class loginCliente extends JFrame {
             return;
         }
         if (usuarioDAO.convalidarSesion(usuario)) {
-            JOptionPane.showMessageDialog(this, "Bienvenido de vuelta! " + nombre);
+            JOptionPane.showMessageDialog(this, "Bienvenido! " + nombre);
             new InicioCompras().setVisible(true);
             this.dispose();
         }

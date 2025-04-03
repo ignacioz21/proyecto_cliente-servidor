@@ -1,13 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
+package com.mycompany.inicio;
 
-package Interfaz;
+
 
 /**
  *
  * @author XPC
  */
+import Interfaz.loginCliente;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -70,12 +69,17 @@ public class Inicio extends JFrame {
     }
 
     private void clienteInicioActionPerformed(ActionEvent evt) {
-      
         new loginCliente().setVisible(true);
         this.setVisible(false); 
     }
     public static void main(String[] args) {
-        
-        SwingUtilities.invokeLater(() -> new Inicio().setVisible(true));
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                Inicio inicio = new Inicio();
+                inicio.setVisible(true);
+            }
+        });
     }
 }

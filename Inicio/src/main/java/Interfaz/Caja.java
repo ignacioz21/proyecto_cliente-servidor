@@ -51,7 +51,7 @@ public class Caja extends JFrame {
     }
 
     private void realizarPago() {
-        JOptionPane.showMessageDialog(this, "Pago realizado con éxito. Total pagado: $" + String.format("%.2f", total));
+        JOptionPane.showMessageDialog(this, "Pago realizado con exito. Total pagado: $" + String.format("%.2f", total));
         carrito.clear();
         dispose();
     }
@@ -59,9 +59,9 @@ public class Caja extends JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             ArrayList<Productos> carrito = new ArrayList<>();
-            // Agregar productos al carrito para pruebas
-            carrito.add(new Productos("Producto 1", "Descripción 1", 1, 1, 10, 1, 10.0f, 10.0f, true));
-            carrito.add(new Productos("Producto 2", "Descripción 2", 2, 2, 20, 2, 20.0f, 20.0f, true));
+            
+            carrito.add(new Productos("Producto 1", "Descripcion 1", 1, 1, 10, 1, 10.0f, 10.0f, true));
+            carrito.add(new Productos("Producto 2", "Descripcion 2", 2, 2, 20, 2, 20.0f, 20.0f, true));
 
             Caja caja = new Caja(carrito);
             caja.setVisible(true);
