@@ -1,7 +1,35 @@
-C:\Users\XPC\OneDrive - Universidad Fidélitas\Documentos\NetBeansProjects\Inicio\src\main\java\com\mycompany\inicio\loginCliente.java
-C:\Users\XPC\OneDrive - Universidad Fidélitas\Documentos\NetBeansProjects\Inicio\src\main\java\com\mycompany\inicio\ProductoDetalles.java
-C:\Users\XPC\OneDrive - Universidad Fidélitas\Documentos\NetBeansProjects\Inicio\src\main\java\com\mycompany\inicio\CarritoCompra.java
-C:\Users\XPC\OneDrive - Universidad Fidélitas\Documentos\NetBeansProjects\Inicio\src\main\java\com\mycompany\inicio\Producto.java
-C:\Users\XPC\OneDrive - Universidad Fidélitas\Documentos\NetBeansProjects\Inicio\src\main\java\com\mycompany\inicio\Inicio.java
-C:\Users\XPC\OneDrive - Universidad Fidélitas\Documentos\NetBeansProjects\Inicio\src\main\java\com\mycompany\inicio\loginAdministrador.java
-C:\Users\XPC\OneDrive - Universidad Fidélitas\Documentos\NetBeansProjects\Inicio\src\main\java\com\mycompany\inicio\InicioCompras.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\BaseDeDatos\CategoriaDAO.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\BaseDeDatos\ConexionDB.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\BaseDeDatos\InventarioDAO.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\BaseDeDatos\Main.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\BaseDeDatos\ProductoDAO.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\BaseDeDatos\ProveedorDAO.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\BaseDeDatos\UsuarioDAO.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\ClasesModelos\Carrito.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\ClasesModelos\Categoria.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\ClasesModelos\ClienteFrecuente.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\ClasesModelos\Contacto.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\ClasesModelos\DetallesPedido.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\ClasesModelos\Empleado.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\ClasesModelos\Inventario.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\ClasesModelos\ItemsCarrito.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\ClasesModelos\LogsSistema.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\ClasesModelos\Pedidos.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\ClasesModelos\Productos.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\ClasesModelos\Promociones.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\ClasesModelos\Proveedor.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\ClasesModelos\Usuario.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\ClienteServidorConcurrente\Cliente.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\ClienteServidorConcurrente\Servidor.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\com\mycompany\inicio\Inicio.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\Herramientas\Encripter.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\Interfaz\Caja.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\Interfaz\CarritoCompra.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\Interfaz\InicioCompras.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\Interfaz\InicioSesion.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\Interfaz\loginAdministrador.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\Interfaz\loginCliente.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\Interfaz\loginRegistro.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\Interfaz\Producto.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\Interfaz\ProductoDetalles.java
+C:\Users\Andres\OneDrive\Documentos\Universidad\Cliente-Servidor\PROYECTO\proyecto_cliente-servidor\Inicio\src\main\java\Interfaz\ResumenCompra.java

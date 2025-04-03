@@ -34,7 +34,7 @@ public class InicioCompras extends JFrame {
 
         filtros();
         inicializarCatalogo();
-        crearPanelProductos();
+        panelProductos();
         crearBotonCarrito();
     }
 
@@ -55,7 +55,7 @@ public class InicioCompras extends JFrame {
             categoriasArray[i] = categorias.get(i).getNombre();
         }
         filtroCategoria = new JComboBox<>(categoriasArray);
-        panelFiltros.add(new JLabel("Categoría:"));
+        panelFiltros.add(new JLabel("Categoria:"));
         panelFiltros.add(filtroCategoria);
         
         String[] rangosPrecio = {"Todos", "Menos de $500", "de $500 a $1000", "Mas de $1000"};
@@ -74,7 +74,7 @@ public class InicioCompras extends JFrame {
     }
 
 
-    private void crearPanelProductos() {
+    private void panelProductos() {
         panelProductos = new JPanel();
         panelProductos.setLayout(new GridLayout(0, 3, 10, 10));
         

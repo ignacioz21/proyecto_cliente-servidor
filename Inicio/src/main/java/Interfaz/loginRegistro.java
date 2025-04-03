@@ -75,7 +75,7 @@ public class loginRegistro extends JFrame {
         panelPrincipal.add(lblNombre);
         panelPrincipal.add(solicitudNombre);
 
-        JLabel lblCorreo = new JLabel("Apelido:");
+        JLabel lblCorreo = new JLabel("Apellido:");
         lblCorreo.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         lblCorreo.setBounds(150, 130, 100, 30);
         solicitudApellido = new JTextField();
