@@ -18,6 +18,7 @@ import BaseDeDatos.CategoriaDAO;
 import BaseDeDatos.ProductoDAO;
 import ClasesModelos.Categoria;
 import ClasesModelos.Productos;
+import Cliente.ClienteController;
 
 public class InicioCompras extends JFrame {
     private List<Productos> catalogoProductos; 
@@ -39,16 +40,15 @@ public class InicioCompras extends JFrame {
     }
 
     private void inicializarCatalogo() {
-        ProductoDAO productoDAO = new ProductoDAO();
-        catalogoProductos = productoDAO.mostrarProductos();
+        ClienteController clienteController = new ClienteController();
+        catalogoProductos = clienteController.obtenerProductos();
     }
 
     private void filtros() {
+        ClienteController clienteController = new ClienteController();
         JPanel panelFiltros = new JPanel();
 
-        CategoriaDAO categoriaDAO = new CategoriaDAO();
-
-        List<Categoria> categorias = categoriaDAO.mostrarCategorias();
+        List<Categoria> categorias = clienteController.obtenerCategorias();
         String[] categoriasArray = new String[categorias.size()];
 
         for (int i = 0; i < categorias.size(); i++) {
@@ -99,7 +99,7 @@ public class InicioCompras extends JFrame {
             
             JButton btnVerDetalles = new JButton("Ver Detalles");
             btnVerDetalles.addActionListener(e -> {
-                if (producto.getStockActual() > 0) { 
+                if (producto.getStockActual() > 0) {
                     ProductoDetalles detalles = new ProductoDetalles(producto);
                     detalles.setVisible(true);
                 } else {

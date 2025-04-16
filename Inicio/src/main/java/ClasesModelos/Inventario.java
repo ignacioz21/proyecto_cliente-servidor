@@ -1,6 +1,8 @@
 package ClasesModelos;
 
-public class Inventario {
+import java.io.Serializable;
+
+public class Inventario implements Serializable {
     private int id_inventario, cantidad, id_empleado, id_producto;
     private String fechaActualizacion, tipoMovimiento;
 

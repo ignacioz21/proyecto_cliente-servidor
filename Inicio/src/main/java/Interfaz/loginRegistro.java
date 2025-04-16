@@ -15,6 +15,7 @@ import java.util.Arrays;
 
 import BaseDeDatos.UsuarioDAO;
 import ClasesModelos.Usuario;
+import Cliente.ClienteController;
 import Herramientas.Encripter;
 
 public class loginRegistro extends JFrame {
@@ -127,7 +128,8 @@ public class loginRegistro extends JFrame {
             nuevoUsuario.setNombre(getNombre());
             nuevoUsuario.setApellido(getApellido());
             nuevoUsuario.setPassword(getContrasena());
-            usuarioDAO.agregarUsuario(nuevoUsuario);
+            ClienteController clienteController = new ClienteController();
+            clienteController.crearUsuario(nuevoUsuario);
             JOptionPane.showMessageDialog(this, "Usuario registrado exitosamente.");
             volverALoginCliente();
         }

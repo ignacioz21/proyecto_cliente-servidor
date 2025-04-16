@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ClienteController {
     private static final String SERVER_ADDRESS = "localhost";
-    private static final int SERVER_PORT = 12345;
+    private static final int SERVER_PORT = 1234;
     private Socket clientSocket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
@@ -37,6 +37,7 @@ public class ClienteController {
             return (Response) in.readObject();
         } catch (Exception e) {
             System.err.println("Error al enviar la solicitud: " + e.getMessage());
+            e.printStackTrace();
             return new Response("Error al procesar la solicitud", null, false);
         }
     }
@@ -49,6 +50,28 @@ public class ClienteController {
         } else {
             System.err.println("Error al crear el usuario: " + response.getMessage());
             return null;
+        }
+    }
+
+    public boolean convalidarUsuario(Usuario usuario) {
+        Request request = new Request("VALIDAR_SESION", usuario);
+        Response response = eviarSolictud(request);
+        if (response.isSuccess()) {
+            return (boolean) response.getData();
+        } else {
+            System.err.println("Error al validar la sesión: " + response.getMessage());
+            return false;
+        }
+    }
+
+    public boolean convalidarSesion(Usuario usuario) {
+        Request request = new Request("CONVALIDAR_SESION", usuario);
+        Response response = eviarSolictud(request);
+        if (response.isSuccess()) {
+            return (boolean) response.getData();
+        } else {
+            System.err.println("Error al validar la sesión: " + response.getMessage());
+            return false;
         }
     }
 
