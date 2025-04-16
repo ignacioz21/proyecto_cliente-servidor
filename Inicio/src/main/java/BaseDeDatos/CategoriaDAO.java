@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CategoriaDAO {
 
-    public void agregarCategoria(Categoria nuevaCategoria){
+    public Categoria agregarCategoria(Categoria nuevaCategoria){
         String sql = "INSERT INTO categoria (nombre, descripcion, estado) VALUES (?, ?, ?)";
         String sqlID = "SELECT id_categoria FROM categoria WHERE nombre = ?";
 
@@ -34,10 +34,12 @@ public class CategoriaDAO {
                 nuevaCategoria.setIdCategoria(rs.getInt("id_categoria"));
             }
             System.out.println("Otorgado correctamente el id a la categoria: " + nuevaCategoria.getNombre());
+            return nuevaCategoria;
         } catch (SQLException e) {
             System.out.println("Error al otorgar el ID a la categoria: " + nuevaCategoria.getNombre());
             System.out.println(e.getMessage());
         }
+        return null;
     }
     public List<Categoria> mostrarCategorias() {
         String sql = "SELECT * FROM categoria";

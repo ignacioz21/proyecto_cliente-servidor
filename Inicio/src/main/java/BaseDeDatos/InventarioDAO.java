@@ -27,7 +27,7 @@ public class InventarioDAO {
     }
 
 
-    public static void agregarInventario(Productos producto, Empleado empleado, Inventario inventario) {
+    public Inventario agregarInventario(Inventario inventario) {
         String sql = "INSERT INTO (id_producto, cantidad, fecha_actualizacion, tipo_movimiento, empleado_id) " +
                 "VALUES (?, ?, ?, ?, ?)";
         try (
@@ -35,13 +35,15 @@ public class InventarioDAO {
                 PreparedStatement pstmt = conex.prepareStatement(sql)
 
         ) {
-            pstmt.setInt(1, producto.getIdProducto());
+            pstmt.setInt(1, inventario.getId_producto());
             pstmt.setInt(2, inventario.getCantidad());
             pstmt.setString(3, inventario.getFechaActualizacion());
             pstmt.setString(4, inventario.getTipoMovimiento());
-            pstmt.setInt(5, empleado.getIdEmpleado());
+            pstmt.setInt(5, inventario.getId_empleado());
+            return inventario;
         } catch (SQLException e) {
             System.out.println("Error al agregar el producto en el inventario: " + e.getMessage());
         }
+        return null;
     }
 }
