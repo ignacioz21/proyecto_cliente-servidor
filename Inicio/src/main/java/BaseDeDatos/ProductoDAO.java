@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ProductoDAO {
 
-    public void agregarProducto(Productos nuevoProducto) {
+    public Productos agregarProducto(Productos nuevoProducto) {
         String sql = "INSERT INTO productos (nombre, descripcion, id_categoria, id_proveedor," +
                 " precio, precio_promocional, stock_actual, stock_minimo, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         String sqlID = "SELECT id_producto FROM productos WHERE nombre = ?";
@@ -41,10 +41,12 @@ public class ProductoDAO {
                 nuevoProducto.setIdProducto(rs.getInt("id_producto"));
             }
             System.out.println("ID otorgado correctamente al producto: " + nuevoProducto.getNombre());
+            return nuevoProducto;
         } catch (SQLException e) {
             System.out.println("Error al dar el ID al producto: " + nuevoProducto.getNombre());
             System.out.println("ERROR: " + e.getMessage());
         }
+        return null;
     }
 
     public List<Productos> mostrarProductos() {

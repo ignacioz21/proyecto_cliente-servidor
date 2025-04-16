@@ -7,11 +7,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Objects;
 
 public class UsuarioDAO {
 
-    public void agregarUsuario(Usuario nuevoUsuario){
+    public Usuario agregarUsuario(Usuario nuevoUsuario){
         Encripter encripter = new Encripter();
         String sql = "INSERT INTO usuario (nombre, apellido, password, estado) VALUES (?, ?, ?, ?)";
         String sqlID = "SELECT id_usuario FROM usuario WHERE nombre = ?";
@@ -37,10 +38,12 @@ public class UsuarioDAO {
                 nuevoUsuario.setIdUsuario(rs.getInt("id_usuario"));
             }
             System.out.println("Otorgado correctamente el id al usuario: " + nuevoUsuario.getNombre());
+            return nuevoUsuario;
         } catch (SQLException e) {
             System.out.println("Error al dar el ID al usuario: " + nuevoUsuario.getNombre());
             System.out.println(e.getMessage());
         }
+        return null;
     }
 
     public boolean convalidarUsuario(String username) {
@@ -76,5 +79,22 @@ public class UsuarioDAO {
             System.out.println("Error al verificar la sesion: " + e.getMessage());
         }
         return false;
+    }
+
+    public List<Usuario> obtenerUsuario() {
+        String sql = "SELECT nombre, apellido, estado FROM usuario";
+        try (Connection conex = ConexionDB.getConexion(); PreparedStatement pstmt = conex.prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Usuario usuario = new Usuario();
+                usuario.setNombre(rs.getString("nombre"));
+                usuario.setApellido(rs.getString("apellido"));
+                usuario.setEstado(rs.getBoolean("estado"));
+                return List.of(usuario);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener los usuarios: " + e.getMessage());
+        }
+        return List.of();
     }
 }
