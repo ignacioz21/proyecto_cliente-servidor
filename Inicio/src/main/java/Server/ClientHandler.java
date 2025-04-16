@@ -70,6 +70,22 @@ public class ClientHandler implements Runnable{
                 case "ELIMINAR_USUARIO":
                     // Lógica para eliminar un usuario
                     break;
+                case "VALIDAR_USUARIO":
+                    Usuario usuarioValidar = (Usuario) request.getData();
+                    boolean esValido = usuarioController.validarUsuario(usuarioValidar.getNombre());
+                    if (esValido) {
+                        return new Response("Usuario validado con éxito", true, true);
+                    } else {
+                        return new Response("Usuario o contraseña incorrectos", false, false);
+                    }
+                case "CONVALIDAR_SESION":
+                    Usuario usuarioConvalidar = (Usuario) request.getData();
+                    boolean sesionConvalidada = usuarioController.convalidarSesion(usuarioConvalidar);
+                    if (sesionConvalidada) {
+                        return new Response("Sesión convalidada con éxito", true, true);
+                    } else {
+                        return new Response("Usuario o contraseña incorrectos", false, false);
+                    }
                 case "CREAR_PRODUCTO":
                     Productos producto = (Productos) request.getData();
                     Productos productoCreado = productoController.agregarProducto(producto);

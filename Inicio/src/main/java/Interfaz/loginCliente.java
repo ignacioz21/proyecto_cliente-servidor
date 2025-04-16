@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import BaseDeDatos.UsuarioDAO;
 import ClasesModelos.Usuario;
+import Cliente.ClienteController;
+
 import javax.swing.JPasswordField;
 
 public class loginCliente extends JFrame {
@@ -112,18 +114,18 @@ public class loginCliente extends JFrame {
     }
 
     private void loginUsuario(ActionEvent evt) {
+        ClienteController clienteController = new ClienteController();
         setNombre(txtUsuario.getText());
         setContrasena(new String(txtContrasena.getPassword()));
         System.out.println("Nombre: " + getNombre());
         System.out.println("Contrasena: " + getContrasena());
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
         Usuario usuario = new Usuario(getNombre(), getContrasena());
 
         if (nombre == null || contrasena == null || nombre.isEmpty() || contrasena.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor ingrese su nombre de usuario y contraseña.");
             return;
         }
-        if (usuarioDAO.convalidarSesion(usuario)) {
+        if (clienteController.convalidarSesion(usuario)) {
             JOptionPane.showMessageDialog(this, "Bienvenido! " + nombre);
             new InicioCompras().setVisible(true);
             this.dispose();

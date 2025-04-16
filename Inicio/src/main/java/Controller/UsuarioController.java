@@ -17,4 +17,14 @@ public class UsuarioController {
         userDAO = new UsuarioDAO();
         return userDAO.obtenerUsuario();
     }
+
+    public boolean validarUsuario(String usuario) {
+        userDAO = new UsuarioDAO();
+        return userDAO.convalidarUsuario(usuario);
+    }
+
+    public boolean convalidarSesion(Usuario usuario) {
+        userDAO = new UsuarioDAO();
+        return userDAO.convalidarSesion(usuario);
+    }
 }

@@ -2,12 +2,14 @@ package ClasesModelos;
 
 import BaseDeDatos.ConexionDB;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Productos {
+public class Productos implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String nombre, descripcion, categoria;
     private int idCategoria, idProveedor, stockActual, stockMinimo, idProducto;
     private float precio, precioPromocional;
