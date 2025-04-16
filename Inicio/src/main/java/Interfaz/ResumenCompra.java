@@ -55,4 +55,8 @@ public class ResumenCompra extends JFrame {
         factura.append(String.format("Total: $%.2f", total));
         return factura;
     }
+    
+    private static void facturaEletronica(){
+        //Poner aqui el metodo de correo 
+    }
 }
