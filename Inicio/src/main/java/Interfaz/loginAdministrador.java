@@ -20,11 +20,7 @@ public class loginAdministrador extends JFrame {
     private JPasswordField txtContrasena;
     
     private JButton btnIniciar;
-   
-   
-    
-    
-    //Aqui se llamaria al empleado con get y set como en loginCliente
+
 
     public loginAdministrador() {
         setTitle("Plataforma de tienda en Linea - Acceso Admin ");

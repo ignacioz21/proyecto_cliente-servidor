@@ -1,9 +1,6 @@
 package Cliente;
 
-import ClasesModelos.Categoria;
-import ClasesModelos.Inventario;
-import ClasesModelos.Productos;
-import ClasesModelos.Usuario;
+import ClasesModelos.*;
 import shared.Request;
 import shared.Response;
 
@@ -126,6 +123,17 @@ public class ClienteController {
             return (List<Categoria>) response.getData();
         } else {
             System.err.println("Error al obtener las categorias: " + response.getMessage());
+            return null;
+        }
+    }
+
+    public Productos cambiarStock (Productos productoComprar) {
+        Request request = new Request("ACTUALIZAR_STOCK", productoComprar);
+        Response response = eviarSolictud(request);
+        if (response.isSuccess()) {
+            return (Productos) response.getData();
+        } else {
+            System.err.println("Error al actualizar el stock: " + response.getMessage());
             return null;
         }
     }
