@@ -51,7 +51,7 @@ public class ProductoDAO {
 
     public List<Productos> mostrarProductos() {
         List<Productos> productos = new ArrayList<>();
-        String sql = "SELECT nombre, descripcion, precio, stock_actual, estado FROM productos";
+        String sql = "SELECT nombre, descripcion, precio, stock_actual, estado, id_producto FROM productos";
         String sqlCategoria = "SELECT productos.nombre, categoria.nombre AS categoria_nombre " +
                 "FROM productos " +
                 "INNER JOIN categoria ON productos.id_categoria = categoria.id_categoria";
@@ -65,6 +65,7 @@ public class ProductoDAO {
                 producto.setPrecio(rs.getFloat("precio"));
                 producto.setStockActual(rs.getInt("stock_actual"));
                 producto.setEstado(rs.getBoolean("estado"));
+                producto.setIdProducto(rs.getInt("id_producto"));
                 productos.add(producto);
             }
         } catch (SQLException e) {

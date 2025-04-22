@@ -1,6 +1,6 @@
 package BaseDeDatos;
 
-import ClasesModelos.Empleado;
+import ClasesModelos.ProductoComprar;
 import ClasesModelos.Inventario;
 import ClasesModelos.Productos;
 
@@ -43,6 +43,23 @@ public class InventarioDAO {
             return inventario;
         } catch (SQLException e) {
             System.out.println("Error al agregar el producto en el inventario: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public Productos cambiarStockInventario(Productos producto){
+        String sql = "UPDATE productos SET stock_actual = ? WHERE id_producto = ?";
+        try (
+                Connection conex = ConexionDB.getConexion();
+                PreparedStatement pstmt = conex.prepareStatement(sql)
+        ) {
+            pstmt.setInt(1, producto.getStockActual());
+            pstmt.setInt(2, producto.getIdProducto());
+            pstmt.executeUpdate();
+            System.out.println("Producto actualizado con exito");
+            return producto;
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar la cantidad de inventario");
         }
         return null;
     }

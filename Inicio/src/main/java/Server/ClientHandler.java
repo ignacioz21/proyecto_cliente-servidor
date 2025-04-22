@@ -1,9 +1,6 @@
 package Server;
 
-import ClasesModelos.Categoria;
-import ClasesModelos.Inventario;
-import ClasesModelos.Productos;
-import ClasesModelos.Usuario;
+import ClasesModelos.*;
 import Controller.CategoriaController;
 import Controller.InventarioController;
 import Controller.ProductoController;
@@ -116,6 +113,10 @@ public class ClientHandler implements Runnable{
                 case "OBTENER_CATEGORIAS":
                     List<Categoria> categorias = categoriaController.obtenerCategorias();
                     return new Response("Lista de categorias obtenida", categorias, true);
+                case "ACTUALIZAR_STOCK":
+                    Productos productoComprar = (Productos) request.getData();
+                    Productos productoComprarActu = inventarioController.cambiarStock(productoComprar);
+                    return new Response("Producto actualizado con exito", productoComprarActu, true);
 
             }
         }catch (Exception e) {

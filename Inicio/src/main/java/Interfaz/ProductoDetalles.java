@@ -12,7 +12,10 @@ package Interfaz;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import ClasesModelos.Productos; 
+
+import ClasesModelos.ProductoComprar;
+import ClasesModelos.Productos;
+import Cliente.ClienteController;
 
 class ProductoDetalles extends JFrame {
     private Productos producto; 
@@ -40,7 +43,7 @@ class ProductoDetalles extends JFrame {
         quantityLabel = new JLabel("Cantidad: " + cantidad, JLabel.CENTER);
 
         JButton changeQuantityButton = new JButton("Cambiar Cantidad");
-        changeQuantityButton.addActionListener(e -> cambiarCantidad());
+        changeQuantityButton.addActionListener(e ->  cambiarCantidad());
 
         JButton addToCartButton = new JButton("Agregar al Carrito");
         addToCartButton.addActionListener(e -> agregarAlCarrito());
@@ -58,22 +61,17 @@ class ProductoDetalles extends JFrame {
     }
 
     private void cambiarCantidad() {
-        String nuevaCantidad = JOptionPane.showInputDialog(this, "Ingrese la cantidad que desea :", cantidad);
-        try {
-            int cantidadIngresada = Integer.parseInt(nuevaCantidad);
-            if (cantidadIngresada > 0) {
-                
-                if (cantidadIngresada > producto.getStockActual()) { 
-                    JOptionPane.showMessageDialog(this, "No hay suficiente stock. Solo hay " + producto.getStockActual() + " disponibles ");
-                } else {
-                    cantidad = cantidadIngresada;
-                    quantityLabel.setText("Cantidad: " + cantidad);
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, " No tenemos esa cantidad ");
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "No tenemos esa cantidad ");
+        int cantidadComprar = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese la cantidad que desea :", cantidad));
+        ClienteController clienteController = new ClienteController();
+
+        if (cantidadComprar < producto.getStockActual()) {
+            int nuevoStock = producto.getStockActual() - cantidadComprar;
+            Productos productoComprar = new Productos();
+            productoComprar.setIdProducto(producto.getIdProducto());
+            productoComprar.setStockActual(nuevoStock);
+            clienteController.cambiarStock(productoComprar);
+        } else {
+            JOptionPane.showMessageDialog(this, "Cantidad no disponible");
         }
     }
 
