@@ -88,4 +88,29 @@ public class ProductoDAO {
 
         return productos;
     }
+
+    public List<Productos> obtenerProductosID(String nombreCategoria) {
+        List<Productos> productos = new ArrayList<>();
+        String sql = "SELECT nombre, descripcion, precio, stock_actual, estado, id_producto FROM productos INNER " +
+                "JOIN categorias ON productos.id_categoria = categoria.id_categoria WHERE nombre = ?";
+        try (Connection conex = ConexionDB.getConexion(); PreparedStatement pstmt = conex.prepareStatement(sql)) {
+            pstmt.setString(1, nombreCategoria);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Productos producto = new Productos();
+                producto.setNombre(rs.getString("nombre"));
+                producto.setDescripcion(rs.getString("descripcion"));
+                producto.setPrecio(rs.getFloat("precio"));
+                producto.setStockActual(rs.getInt("stock_actual"));
+                producto.setEstado(rs.getBoolean("estado"));
+                producto.setIdProducto(rs.getInt("id_producto"));
+                productos.add(producto);
+                System.out.println("Se han obtenido con exito los productos con su categoria");
+                return productos;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al mostrar los productos: " + e.getMessage());
+        }
+        return null;
+    }
 }

@@ -97,4 +97,19 @@ public class UsuarioDAO {
         }
         return List.of();
     }
+
+    public Usuario obtenerIDUsuario (Usuario usuario) {
+        String sql = "SELECT id_usuario FROM usuario WHERE nombre = ?";
+        try (Connection conex = ConexionDB.getConexion(); PreparedStatement pstmt = conex.prepareStatement(sql)) {
+            pstmt.setString(1, usuario.getNombre());
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                usuario.setIdUsuario(rs.getInt("id_usuario"));
+                return usuario;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el ID del usuario: " + e.getMessage());
+        }
+        return null;
+    }
 }

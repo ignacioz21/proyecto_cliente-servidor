@@ -1,10 +1,7 @@
 package Server;
 
 import ClasesModelos.*;
-import Controller.CategoriaController;
-import Controller.InventarioController;
-import Controller.ProductoController;
-import Controller.UsuarioController;
+import Controller.*;
 import shared.Request;
 import shared.Response;
 
@@ -20,6 +17,7 @@ public class ClientHandler implements Runnable{
     private ProductoController productoController;
     private InventarioController inventarioController;
     private CategoriaController categoriaController;
+    private EmpleadoController empleadoController;
 
 
     public ClientHandler(Socket clienteSocket) {
@@ -28,6 +26,7 @@ public class ClientHandler implements Runnable{
         this.productoController = new ProductoController();
         this.inventarioController = new InventarioController();
         this.categoriaController = new CategoriaController();
+        this.empleadoController = new EmpleadoController();
     }
 
     @Override
@@ -83,6 +82,10 @@ public class ClientHandler implements Runnable{
                     } else {
                         return new Response("Usuario o contraseña incorrectos", false, false);
                     }
+                case "OBTENER_ID_USUARIO":
+                    Usuario usuarioId = (Usuario) request.getData();
+                    Usuario idUsuario = usuarioController.obtenerUsuarioPorId(usuarioId);
+                    return new Response("ID de usuario obtenido con éxito", idUsuario, true);
                 case "CREAR_PRODUCTO":
                     Productos producto = (Productos) request.getData();
                     Productos productoCreado = productoController.agregarProducto(producto);
@@ -117,6 +120,18 @@ public class ClientHandler implements Runnable{
                     Productos productoComprar = (Productos) request.getData();
                     Productos productoComprarActu = inventarioController.cambiarStock(productoComprar);
                     return new Response("Producto actualizado con exito", productoComprarActu, true);
+                case "FILTRAR_PRODUCTOS":
+                    String nombreCategoria = (String) request.getData();
+                    List<Productos> productosFiltrados = productoController.filtrarProductosCategoria(nombreCategoria);
+                    return new Response("Lista de productos filtrados", productosFiltrados, true);
+                case "VERIFICAR_EMPLEADO":
+                    Usuario usuarioEmpleado = (Usuario) request.getData();
+                    boolean empleado = empleadoController.verificarSesion(usuarioEmpleado);
+                    if (empleado) {
+                        return new Response("Empleado validado con éxito", true, true);
+                    } else {
+                        return new Response("Empleado no encontrado", null, false);
+                    }
 
             }
         }catch (Exception e) {
