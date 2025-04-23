@@ -85,20 +85,24 @@ public class loginAdministrador extends JFrame {
             return;
         }else{
             Usuario adminUsuario = new Usuario(usuario, contrasena);
-            UsuarioController usuarioController = new UsuarioController();
-            if (usuarioController.convalidarSesion(adminUsuario)) {
+            if (clienteController.convalidarSesion(adminUsuario)) {
                 EmpleadoController empleadoController = new EmpleadoController();
-                Usuario admin = usuarioController.obtenerUsuarioPorId(adminUsuario);
+                Usuario admin = clienteController.obtenerUsuarioPorId(adminUsuario);
                 boolean existe = empleadoController.verificarSesion(admin);
                 if (existe) {
                     JOptionPane.showMessageDialog(this, "Bienvenido " + admin.getNombre(), "Inicio de Sesión", JOptionPane.INFORMATION_MESSAGE);
+                    abrirAdmin(evt);
                 }else{
                     JOptionPane.showMessageDialog(this, "Usuario no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
+                    txtUsuario.setText("");
+                    txtContrasena.setText("");
                 }
+            }else {
+                JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+                txtUsuario.setText("");
+                txtContrasena.setText("");
             }
         }
-        abrirAdmin(evt);
     }
 
     private void abrirAdmin(ActionEvent evt) {
