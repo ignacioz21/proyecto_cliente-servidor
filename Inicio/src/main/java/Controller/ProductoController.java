@@ -17,4 +17,9 @@ public class ProductoController {
         productoDAO = new ProductoDAO();
         return productoDAO.mostrarProductos();
     }
+
+    public List<Productos> filtrarProductosCategoria(String nombreCategoria) {
+        productoDAO = new ProductoDAO();
+        return productoDAO.obtenerProductosID(nombreCategoria);
+    }
 }

@@ -28,6 +28,9 @@ public class Empleado {
         }
     }
 
+    public Empleado() {
+    }
+
     public int getIdEmpleado() {
         return idEmpleado;
     }

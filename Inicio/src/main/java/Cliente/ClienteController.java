@@ -137,4 +137,37 @@ public class ClienteController {
             return null;
         }
     }
+
+    public List<Productos> filtrarProductos (String nombre) {
+        Request request = new Request("FILTRAR_PRODUCTOS", nombre);
+        Response response = eviarSolictud(request);
+        if (response.isSuccess()) {
+            return (List<Productos>) response.getData();
+        } else {
+            System.err.println("Error al filtrar los productos: " + response.getMessage());
+            return null;
+        }
+    }
+
+    public boolean verificarEmpleado(Usuario usuario) {
+        Request request = new Request("VERIFICAR_EMPLEADO", usuario);
+        Response response = eviarSolictud(request);
+        if (response.isSuccess()) {
+            return (boolean) response.getData();
+        } else {
+            System.err.println("Error al verificar el empleado: " + response.getMessage());
+            return false;
+        }
+    }
+
+    public Usuario obtenerUsuarioPorId(Usuario usuario) {
+        Request request = new Request("OBTENER_ID_USUARIO", usuario);
+        Response response = eviarSolictud(request);
+        if (response.isSuccess()) {
+            return (Usuario) response.getData();
+        } else {
+            System.err.println("Error al obtener el ID del usuario: " + response.getMessage());
+            return null;
+        }
+    }
 }

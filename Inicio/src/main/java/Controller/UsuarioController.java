@@ -27,4 +27,9 @@ public class UsuarioController {
         userDAO = new UsuarioDAO();
         return userDAO.convalidarSesion(usuario);
     }
+
+    public Usuario obtenerUsuarioPorId(Usuario usuario) {
+        userDAO = new UsuarioDAO();
+        return userDAO.obtenerIDUsuario(usuario);
+    }
 }

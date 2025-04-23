@@ -9,13 +9,8 @@ package Interfaz;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import BaseDeDatos.CategoriaDAO;
-import BaseDeDatos.ProductoDAO;
 import ClasesModelos.Categoria;
 import ClasesModelos.Productos;
 import Cliente.ClienteController;
@@ -152,7 +147,7 @@ public class InicioCompras extends JFrame {
                             return true;
                     }
                 })
-                .filter(producto -> !soloDisponibles || producto.getStockActual() > 0)
+                .filter(producto -> !soloDisponibles || producto.isEstado())
                 .collect(Collectors.toList());
         mostrarProductos(productosFiltrados);
     }
