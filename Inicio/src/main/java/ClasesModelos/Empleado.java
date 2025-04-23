@@ -11,24 +11,26 @@ public class Empleado {
     private int idUsuario, idEmpleado;
     private String cargo, departamento, fechaContrato;
     private double salario;
+    private boolean estado;
 
-    public Empleado(int idUsuairio, String cargo, String departamento, String fechaContrato, double salario) {
+    public Empleado(int idUsuairio, String cargo, String departamento, String fechaContrato, double salario, boolean estado) {
         this.idUsuario = idUsuairio;
         this.cargo = cargo;
         this.departamento = departamento;
         this.fechaContrato = fechaContrato;
         this.salario = salario;
-        String sql = "SELECT id_empleado FROM productos WHERE id_usuario = ?";
-        try (Connection conex = ConexionDB.getConexion(); PreparedStatement pstmt = conex.prepareStatement(sql)) {
-            pstmt.setInt(1, this.idUsuario);
-            ResultSet rs = pstmt.executeQuery();
-            this.idEmpleado = rs.getInt("id_usuario");
-        } catch (SQLException e){
-            System.out.println("Error al establecer el id del objeto: " + this.idUsuario + "\nERROR: " + e.getMessage());
-        }
+        this.estado = estado;
     }
 
     public Empleado() {
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     public int getIdEmpleado() {

@@ -9,7 +9,7 @@ import java.util.List;
 public class EmpleadoController {
     private EmpleadoDAO empleadoDAO;
 
-    public boolean verificarSesion(Usuario usuario){
+    public Empleado verificarSesion(Usuario usuario){
         empleadoDAO = new EmpleadoDAO();
         return empleadoDAO.verificarSesion(usuario);
     }

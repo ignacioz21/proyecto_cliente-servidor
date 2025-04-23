@@ -188,4 +188,18 @@ public class ProductoDAO {
         }
         return false;
     }
+
+    public boolean editarStockProducto(Productos productos) {
+        String sql = "UPDATE productos SET stock_actual = ? WHERE nombre = ?";
+        try (Connection conex = ConexionDB.getConexion(); PreparedStatement pstmt = conex.prepareStatement(sql)) {
+            pstmt.setInt(1, productos.getStockActual());
+            pstmt.setString(2, productos.getNombre());
+            pstmt.executeUpdate();
+            System.out.println("Stock del producto editado correctamente");
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error al editar el stock del producto: " + e.getMessage());
+        }
+        return false;
+    }
 }

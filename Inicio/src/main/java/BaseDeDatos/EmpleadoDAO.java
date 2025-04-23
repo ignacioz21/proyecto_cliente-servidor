@@ -50,21 +50,30 @@ public class EmpleadoDAO {
         return empleados;
     }
 
-    public boolean verificarSesion(Usuario usuario) {
+    public Empleado verificarSesion(Usuario usuario) {
         String sql = "SELECT * FROM empleado WHERE id_usuario = ?";
         try (Connection conex = ConexionDB.getConexion(); PreparedStatement pstmt = conex.prepareStatement(sql)) {
             pstmt.setInt(1, usuario.getIdUsuario());
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                System.out.println("El empleado existe");
-                return true;
-            } else {
-                System.out.println("El empleado no existe");
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    System.out.println("El empleado existe");
+                    Empleado empleado = new Empleado();
+                    empleado.setIdEmpleado(rs.getInt("id_empleado"));
+                    empleado.setIdUsuario(rs.getInt("id_usuario"));
+                    empleado.setCargo(rs.getString("cargo"));
+                    empleado.setDepartamento(rs.getString("departamento"));
+                    empleado.setFechaContrato(rs.getString("fechaContrato"));
+                    empleado.setSalario(rs.getDouble("salario"));
+                    empleado.setEstado(true);
+                    return empleado;
+                } else {
+                    System.out.println("El empleado no existe");
+                }
             }
         } catch (SQLException e) {
             System.out.println("Error al verificar la sesión del empleado: " + e.getMessage());
         }
-        return false;
+        return null;
     }
 
     public Empleado obtenerEmpleadoID(int id){

@@ -124,8 +124,10 @@ public class inicioAdmin extends JFrame {
     }
 
     private void btnRestablecerProductoActionPerformed(ActionEvent evt) {
-        //Aqui le puede poner un JOptionPane que le pida el nombre como los otros y pedirle con otro JOption Pane la nueva cantidad
-        JOptionPane.showMessageDialog(this, "Funcionalidad de restablecer producto aún no implementada.");
+        SwingUtilities.invokeLater(() -> {
+            buscarProductoCantidad admin = new  buscarProductoCantidad();
+            admin.setVisible(true);
+        });
     }
 
     public static void main(String[] args) {
