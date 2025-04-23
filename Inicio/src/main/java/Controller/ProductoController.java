@@ -43,4 +43,9 @@ public class ProductoController {
         return productoDAO.habilitarProducto(producto);
     }
 
+    public boolean editarStockProducto(Productos producto) {
+        productoDAO = new ProductoDAO();
+        return productoDAO.editarStockProducto(producto);
+    }
+
 }

@@ -8,6 +8,11 @@ package Interfaz;
  *
  * @author XPC
  */
+import ClasesModelos.Empleado;
+import ClasesModelos.Usuario;
+import Cliente.ClienteController;
+import Controller.EmpleadoController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -86,17 +91,31 @@ public class loginEmpleado extends JFrame {
 }
 
     private void validacionEmpleado(ActionEvent evt) {
-        // Aquí iría la validación de credenciales con la base de datos
+        ClienteController clienteController = new ClienteController();
         String usuario = txtUsuario.getText();
         String contrasena = new String(txtContrasena.getPassword());
 
-     
-        if (usuario.equals("empleado") && contrasena.equals("contrasena123")) {
-           
-            abrirEmpleado(evt);
-        } else {
-          
-            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.", "Error de Inicio de Sesión", JOptionPane.ERROR_MESSAGE);
+        if (usuario.isEmpty() || contrasena.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }else{
+            Usuario empleadoUsuario = new Usuario(usuario, contrasena);
+            if (clienteController.convalidarSesion(empleadoUsuario)) {
+                EmpleadoController empleadoController = new EmpleadoController();
+                Usuario admin = clienteController.obtenerUsuarioPorId(empleadoUsuario);
+                Empleado existe = empleadoController.verificarSesion(admin);
+                if (existe.isEstado()) {
+                    JOptionPane.showMessageDialog(this, "Bienvenido " + admin.getNombre(), "Inicio de Sesión", JOptionPane.INFORMATION_MESSAGE);
+                    abrirEmpleado(evt);
+                }else{
+                    JOptionPane.showMessageDialog(this, "Usuario no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+                    txtUsuario.setText("");
+                    txtContrasena.setText("");
+                }
+            }else {
+                JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+                txtUsuario.setText("");
+                txtContrasena.setText("");
+            }
         }
     }
 

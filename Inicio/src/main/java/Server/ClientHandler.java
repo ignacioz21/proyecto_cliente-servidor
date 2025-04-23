@@ -141,12 +141,21 @@ public class ClientHandler implements Runnable{
                     return new Response("Lista de productos filtrados", productosFiltrados, true);
                 case "VERIFICAR_EMPLEADO":
                     Usuario usuarioEmpleado = (Usuario) request.getData();
-                    boolean empleado = empleadoController.verificarSesion(usuarioEmpleado);
-                    if (empleado) {
-                        return new Response("Empleado validado con éxito", true, true);
+                    Empleado empleado = empleadoController.verificarSesion(usuarioEmpleado);
+                    if (empleado != null) {
+                        return new Response("Empleado validado con éxito", empleado, true);
                     } else {
-                        return new Response("Empleado no encontrado", null, false);
+                        return new Response("Empleado no encontrado", empleado, false);
                     }
+                    case "ACTUALIZAR_STOCK_PRODUCTO":
+                    Productos productoStock = (Productos) request.getData();
+                    boolean stockActualizado = productoController.editarStockProducto(productoStock);
+                    if (stockActualizado) {
+                        return new Response("Stock actualizado con éxito", true, true);
+                    } else {
+                        return new Response("Error al actualizar el stock", false, false);
+                    }
+
 
             }
         }catch (Exception e) {

@@ -73,7 +73,7 @@ public class ClienteController {
     }
 
     public Productos crearProducto(Productos producto) {
-        Request request = new Request("CREAR_PRODUCTOS", producto);
+        Request request = new Request("CREAR_PRODUCTO", producto);
         Response response = eviarSolictud(request);
         if (response.isSuccess()) {
             return (Productos) response.getData();
@@ -200,6 +200,17 @@ public class ClienteController {
             return true;
         } else {
             System.err.println("Error al inhabilitar el producto: " + response.getMessage());
+            return false;
+        }
+    }
+
+    public boolean actualizarStockProducto (Productos productos) {
+        Request request = new Request("ACTUALIZAR_STOCK_PRODUCTO", productos);
+        Response response = eviarSolictud(request);
+        if (response.isSuccess()) {
+            return true;
+        } else {
+            System.err.println("Error al actualizar el stock del producto: " + response.getMessage());
             return false;
         }
     }

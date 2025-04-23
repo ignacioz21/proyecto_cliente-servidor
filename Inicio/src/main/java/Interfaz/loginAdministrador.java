@@ -88,8 +88,8 @@ public class loginAdministrador extends JFrame {
             if (clienteController.convalidarSesion(adminUsuario)) {
                 EmpleadoController empleadoController = new EmpleadoController();
                 Usuario admin = clienteController.obtenerUsuarioPorId(adminUsuario);
-                boolean existe = empleadoController.verificarSesion(admin);
-                if (existe) {
+                Empleado existe = empleadoController.verificarSesion(admin);
+                if (existe.isEstado() && existe.getCargo().equals("Administrador")) {
                     JOptionPane.showMessageDialog(this, "Bienvenido " + admin.getNombre(), "Inicio de Sesión", JOptionPane.INFORMATION_MESSAGE);
                     abrirAdmin(evt);
                 }else{

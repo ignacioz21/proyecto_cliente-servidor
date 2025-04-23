@@ -8,6 +8,9 @@ package Interfaz;
  *
  * @author XPC
  */
+import ClasesModelos.Productos;
+import Cliente.ClienteController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -115,7 +118,25 @@ public class nuevoProducto extends JFrame {
 }
 
     private void guardarProducto(ActionEvent evt) {
-        // Aqui iria el guardado del producto en la base de datos 
+        String nombre = txtNombre.getText();
+        String categoria = txtCategoria.getText();
+        String descripcion = txtDescripcion.getText();
+        String cantidad = txtCantidad.getText();
+        String precio = txtPrecio.getText();
+        ClienteController clienteController = new ClienteController();
+        Productos productos = new Productos();
+        productos.setNombre(nombre);
+        productos.setCategoria(categoria);
+        productos.setDescripcion(descripcion);
+        productos.setStockActual(Integer.parseInt(cantidad));
+        productos.setPrecio(Float.parseFloat(precio));
+        if (clienteController.crearProducto(productos) != null) {
+            JOptionPane.showMessageDialog(this, "Producto guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al guardar el producto", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        JOptionPane.showMessageDialog(this, "Producto guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
        
     }
 
