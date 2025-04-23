@@ -22,4 +22,25 @@ public class ProductoController {
         productoDAO = new ProductoDAO();
         return productoDAO.obtenerProductosID(nombreCategoria);
     }
+
+    public Productos buscarProductos(Productos producto) {
+        productoDAO = new ProductoDAO();
+        return productoDAO.buscarProducto(producto);
+    }
+
+    public boolean editarProducto(Productos producto) {
+        productoDAO = new ProductoDAO();
+        return productoDAO.editarProducto(producto);
+    }
+
+    public boolean inhabilitarProducto(Productos producto) {
+        productoDAO = new ProductoDAO();
+        return productoDAO.inhabilitarProducto(producto);
+    }
+
+    public boolean habilitarProducto(Productos producto) {
+        productoDAO = new ProductoDAO();
+        return productoDAO.habilitarProducto(producto);
+    }
+
 }

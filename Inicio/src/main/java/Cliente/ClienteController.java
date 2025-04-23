@@ -170,4 +170,37 @@ public class ClienteController {
             return null;
         }
     }
+
+    public boolean editarProducto(Productos producto) {
+        Request request = new Request("ACTUALIZAR_PRODUCTO", producto);
+        Response response = eviarSolictud(request);
+        if (response.isSuccess()) {
+            return true;
+        } else {
+            System.err.println("Error al editar el producto: " + response.getMessage());
+            return false;
+        }
+    }
+
+    public boolean buscarProducto(Productos producto) {
+        Request request = new Request("BUSCAR_PRODUCTO", producto);
+        Response response = eviarSolictud(request);
+        if (response.isSuccess()) {
+            return true;
+        } else {
+            System.err.println("Error al buscar el producto: " + response.getMessage());
+            return false;
+        }
+    }
+
+    public boolean inhabilitarProducto(Productos producto) {
+        Request request = new Request("ELIMINAR_PRODUCTO", producto);
+        Response response = eviarSolictud(request);
+        if (response.isSuccess()) {
+            return true;
+        } else {
+            System.err.println("Error al inhabilitar el producto: " + response.getMessage());
+            return false;
+        }
+    }
 }

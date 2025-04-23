@@ -94,18 +94,33 @@ public class ClientHandler implements Runnable{
                     List<Productos> productos = productoController.obtenerProductos();
                     return new Response("Lista de productos obtenida", productos, true);
                 case "ACTUALIZAR_PRODUCTO":
-                    // Lógica para actualizar un producto
-                    break;
+                    Productos productoEdit = (Productos) request.getData();
+                    boolean productoActualizado = productoController.editarProducto(productoEdit);
+                    if (productoActualizado) {
+                        return new Response("Producto actualizado con exito", true, true);
+                    } else {
+                        return new Response("Error al actualizar el producto", false, false);
+                    }
                 case "ELIMINAR_PRODUCTO":
-                    // Lógica para eliminar un producto
-                    break;
+                    Productos productoEliminar = (Productos) request.getData();
+                    boolean productoEliminado = productoController.inhabilitarProducto(productoEliminar);
+                    if (productoEliminado) {
+                        return new Response("Producto eliminado con exito", true, true);
+                    } else {
+                        return new Response("Error al eliminar el producto", false, false);
+                    }
                 case "GUARDAR_PRODUCTO":
                     Inventario inventario = (Inventario) request.getData();
                     Inventario inventarioGuardado = inventarioController.agregarAInventario(inventario);
                     return new Response("Producto guardado en inventario", inventarioGuardado, true);
                 case "BUSCAR_PRODUCTO":
-                    // Lógica para buscar un producto
-                    break;
+                    Productos producto1 = (Productos) request.getData();
+                    Productos productoBuscado = productoController.buscarProductos(producto1);
+                    if (productoBuscado != null) {
+                        return new Response("Producto encontrado", productoBuscado, true);
+                    } else {
+                        return new Response("Producto no encontrado", null, false);
+                    }
                 case "CREAR_CATEGORIA":
                     Categoria categoria = (Categoria) request.getData();
                     Categoria categoriaCreada = categoriaController.agregarCategoria(categoria);

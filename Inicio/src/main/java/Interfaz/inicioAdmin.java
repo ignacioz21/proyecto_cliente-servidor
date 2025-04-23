@@ -119,7 +119,7 @@ public class inicioAdmin extends JFrame {
 
   private void btnControlInventariosActionPerformed(ActionEvent evt) {
        
-        new controlInventario().setVisible(true);
+        new gestionInventario().setVisible(true);
         this.dispose(); 
     }
 

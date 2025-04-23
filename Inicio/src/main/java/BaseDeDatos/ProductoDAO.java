@@ -113,4 +113,79 @@ public class ProductoDAO {
         }
         return null;
     }
+
+    public Productos buscarProducto(Productos producto) {
+        String sql = "SELECT nombre, descripcion, precio, stock_actual, estado FROM productos WHERE nombre = ?";
+        try (Connection conex = ConexionDB.getConexion(); PreparedStatement pstmt = conex.prepareStatement(sql)) {
+            pstmt.setString(1, producto.getNombre());
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                producto.setNombre(rs.getString("nombre"));
+                producto.setDescripcion(rs.getString("descripcion"));
+                producto.setPrecio(rs.getFloat("precio"));
+                producto.setStockActual(rs.getInt("stock_actual"));
+                producto.setEstado(rs.getBoolean("estado"));
+                System.out.println("Producto encontrado: " + producto.getNombre());
+                return producto;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al buscar el producto: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public boolean inhabilitarProducto(Productos productos) {
+        String sql = "UPDATE productos SET estado = ? WHERE nombre = ?";
+        try (Connection conex = ConexionDB.getConexion(); PreparedStatement pstmt = conex.prepareStatement(sql)) {
+            pstmt.setBoolean(1, productos.isEstado());
+            pstmt.setString(2, productos.getNombre());
+            pstmt.executeUpdate();
+            System.out.println("Producto inhabilitado correctamente");
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error al inhabilitar el producto: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean habilitarProducto(Productos productos) {
+        String sql = "UPDATE productos SET estado = ? WHERE nombre = ?";
+        try (Connection conex = ConexionDB.getConexion(); PreparedStatement pstmt = conex.prepareStatement(sql)) {
+            pstmt.setBoolean(1, productos.isEstado());
+            pstmt.setString(2, productos.getNombre());
+            pstmt.executeUpdate();
+            System.out.println("Producto habilitado correctamente");
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error al habilitar el producto: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean editarProducto(Productos productos) {
+        String sql = "UPDATE productos SET stock_actual = ?, precio = ?, id_categoria = ?, descripcion = ? WHERE nombre = ?";
+        String sqlIdCategoria = "SELECT id_categoria FROM categoria WHERE nombre = ?";
+        try (Connection conex = ConexionDB.getConexion(); PreparedStatement pstmt = conex.prepareStatement(sqlIdCategoria)) {
+            pstmt.setString(1, productos.getCategoria());
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                productos.setIdCategoria(rs.getInt("id_categoria"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el ID de la categoria: " + e.getMessage());
+        }
+        try (Connection conex = ConexionDB.getConexion(); PreparedStatement pstmt = conex.prepareStatement(sql)) {
+            pstmt.setInt(1, productos.getStockActual());
+            pstmt.setFloat(2, productos.getPrecio());
+            pstmt.setInt(3, productos.getIdCategoria());
+            pstmt.setString(4, productos.getDescripcion());
+            pstmt.setString(5, productos.getNombre());
+            pstmt.executeUpdate();
+            System.out.println("Producto editado correctamente");
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error al editar el producto: " + e.getMessage());
+        }
+        return false;
+    }
 }

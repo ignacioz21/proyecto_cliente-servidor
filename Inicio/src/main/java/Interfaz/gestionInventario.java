@@ -29,7 +29,7 @@ public class gestionInventario extends JFrame {
 
     private void iniciarInterfaz() {
        
-        panelFondo = new ImagenFondo("imagenes/laptop.jpeg"); 
+        panelFondo = new ImagenFondo("imagenes/almacen.jpeg"); 
         panelFondo.setLayout(new BorderLayout());
 
         JLabel jLabel1 = new JLabel("Gestión de Inventario", SwingConstants.CENTER);
@@ -39,7 +39,7 @@ public class gestionInventario extends JFrame {
 
       
         menuBar = new JMenuBar();
-        menuBar.setBackground(new Color(0, 102, 204)); 
+       
 
         menuOpciones = new JMenu("Opciones");
         menuOpciones.setFont(new Font("Segoe UI", Font.BOLD, 16));
@@ -62,13 +62,13 @@ public class gestionInventario extends JFrame {
     }
 
     private void btnModificarProductoActionPerformed(ActionEvent evt) {
-       //Aqui puede hacerle igual un JOptionpane que valide el producto si existe y si si existe que lo tire al siguiente jframe
-        JOptionPane.showMessageDialog(this, "Funcionalidad de modificar producto aún no implementada.");
+      BuscarProductoGestion buscarFrame = new BuscarProductoGestion();
+        buscarFrame.setVisible(true);
     }
 
     private void btnEliminarProductoActionPerformed(ActionEvent evt) {
-           //Aqui puede pedirle por un JOptionPane el nombre del producto y si si existe validarlo con la base de datos y borrarlo 
-        JOptionPane.showMessageDialog(this, "Funcionalidad de eliminar producto aún no implementada.");
+   eliminarProductoGestion eliminarFrame = new eliminarProductoGestion();
+        eliminarFrame.setVisible(true);
     }
 
     public static void main(String[] args) {
