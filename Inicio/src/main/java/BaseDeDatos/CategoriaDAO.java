@@ -59,4 +59,18 @@ public class CategoriaDAO {
         }
         return categorias;
     }
+
+    public Categoria buscarCategoriaId(Categoria categoria) {
+        String sql = "SELECT id_categoria FROM categoria WHERE nombre = ?";
+        try (Connection conex = ConexionDB.getConexion(); PreparedStatement pstmt = conex.prepareStatement(sql)) {
+            pstmt.setString(1, categoria.getNombre());
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                categoria.setIdCategoria(rs.getInt("id_categoria"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al buscar la categoria por ID: " + e.getMessage());
+        }
+        return categoria;
+    }
 }

@@ -18,4 +18,9 @@ public class CategoriaController {
         categoriaDAO = new CategoriaDAO();
         return categoriaDAO.mostrarCategorias();
     }
+
+    public Categoria buscarCategoriaId(Categoria categoria) {
+        categoriaDAO = new CategoriaDAO();
+        return categoriaDAO.buscarCategoriaId(categoria);
+    }
 }

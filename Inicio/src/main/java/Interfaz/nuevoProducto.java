@@ -8,16 +8,19 @@ package Interfaz;
  *
  * @author XPC
  */
+import BaseDeDatos.ProductoDAO;
+import ClasesModelos.Categoria;
 import ClasesModelos.Productos;
 import Cliente.ClienteController;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 public class nuevoProducto extends JFrame {
     private JTextField txtNombre;
-    private JTextField txtCategoria;
+    private JComboBox<String> cmbCategoria;
     private JTextArea txtDescripcion;
     private JTextField txtCantidad;
     private JTextField txtPrecio;
@@ -58,9 +61,11 @@ public class nuevoProducto extends JFrame {
         lblCategoria.setForeground(Color.WHITE);
         fondo.add(lblCategoria);
 
-        txtCategoria = new JTextField();
-        txtCategoria.setBounds(360, 150, 250, 30);
-        fondo.add(txtCategoria);
+        ClienteController clienteController = new ClienteController();
+        List<Categoria> categorias = clienteController.obtenerCategorias();
+        cmbCategoria = new JComboBox<>(categorias.stream().map(Categoria::getNombre).toArray(String[]::new));
+        cmbCategoria.setBounds(360, 150, 250, 30);
+        fondo.add(cmbCategoria);
 
         JLabel lblDescripcion = new JLabel("Descripcion:");
         lblDescripcion.setBounds(200, 200, 150, 30);
@@ -100,45 +105,71 @@ public class nuevoProducto extends JFrame {
 
         btnGuardar.addActionListener(this::guardarProducto);
     }
+
     public class nuevoProductoImagen extends JPanel {
-    private Image imagen;
+        private Image imagen;
 
-    public nuevoProductoImagen(String rutaImagen) {
-        ImageIcon icon = new ImageIcon(rutaImagen);
-        imagen = icon.getImage();
-    }
+        public nuevoProductoImagen(String rutaImagen) {
+            ImageIcon icon = new ImageIcon(rutaImagen);
+            imagen = icon.getImage();
+        }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        if (imagen != null) {
-            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            if (imagen != null) {
+                g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+            }
         }
     }
-}
 
     private void guardarProducto(ActionEvent evt) {
-        String nombre = txtNombre.getText();
-        String categoria = txtCategoria.getText();
-        String descripcion = txtDescripcion.getText();
-        String cantidad = txtCantidad.getText();
-        String precio = txtPrecio.getText();
-        ClienteController clienteController = new ClienteController();
-        Productos productos = new Productos();
-        productos.setNombre(nombre);
-        productos.setCategoria(categoria);
-        productos.setDescripcion(descripcion);
-        productos.setStockActual(Integer.parseInt(cantidad));
-        productos.setPrecio(Float.parseFloat(precio));
-        if (clienteController.crearProducto(productos) != null) {
-            JOptionPane.showMessageDialog(this, "Producto guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "Error al guardar el producto", "Error", JOptionPane.ERROR_MESSAGE);
+        String nombre = txtNombre.getText().trim();
+        String categoria = (String) cmbCategoria.getSelectedItem();
+        String descripcion = txtDescripcion.getText().trim();
+        String cantidad = txtCantidad.getText().trim();
+        String precio = txtPrecio.getText().trim();
+
+        if (nombre.isEmpty() || categoria.isEmpty() || descripcion.isEmpty() || cantidad.isEmpty() || precio.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
-        JOptionPane.showMessageDialog(this, "Producto guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-       
+        try {
+            int cantidadInt = Integer.parseInt(cantidad);
+            float precioFloat = Float.parseFloat(precio);
+
+            ClienteController clienteController = new ClienteController();
+
+            // Fetch `id_categoria` from the database
+            Categoria cate = new Categoria();
+            cate.setNombre(categoria);
+            Categoria idCategoria = clienteController.buscarCategoriaId(cate);
+
+            if (idCategoria == null) {
+                JOptionPane.showMessageDialog(this, "La categoría especificada no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Productos productos = new Productos();
+            productos.setNombre(nombre);
+            productos.setDescripcion(descripcion);
+            productos.setStockActual(cantidadInt);
+            productos.setPrecio(precioFloat);
+            productos.setIdCategoria(idCategoria.getIdCategoria());
+            ProductoDAO dao = new ProductoDAO();
+
+            if (dao.agregarProducto(productos)) {
+                JOptionPane.showMessageDialog(this, "Producto guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al guardar el producto", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Cantidad y precio deben ser valores numéricos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
+
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new nuevoProducto().setVisible(true));

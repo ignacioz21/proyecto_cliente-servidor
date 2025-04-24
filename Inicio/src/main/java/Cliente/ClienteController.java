@@ -72,14 +72,14 @@ public class ClienteController {
         }
     }
 
-    public Productos crearProducto(Productos producto) {
+    public boolean crearProducto(Productos producto) {
         Request request = new Request("CREAR_PRODUCTO", producto);
         Response response = eviarSolictud(request);
         if (response.isSuccess()) {
-            return (Productos) response.getData();
+            return (boolean) response.getData();
         } else {
             System.err.println("Error al crear el producto: " + response.getMessage());
-            return null;
+            return false;
         }
     }
 
@@ -212,6 +212,17 @@ public class ClienteController {
         } else {
             System.err.println("Error al actualizar el stock del producto: " + response.getMessage());
             return false;
+        }
+    }
+
+    public Categoria buscarCategoriaId(Categoria categoria) {
+        Request request = new Request("OBTENER_CATEGORIA_ID", categoria);
+        Response response = eviarSolictud(request);
+        if (response.isSuccess()) {
+            return (Categoria) response.getData();
+        } else {
+            System.err.println("Error al buscar la categoria por ID: " + response.getMessage());
+            return null;
         }
     }
 }
