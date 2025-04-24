@@ -147,7 +147,7 @@ public class nuevoProducto extends JFrame {
             Categoria idCategoria = clienteController.buscarCategoriaId(cate);
 
             if (idCategoria == null) {
-                JOptionPane.showMessageDialog(this, "La categoría especificada no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "La categoria especificada no existe.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -160,12 +160,12 @@ public class nuevoProducto extends JFrame {
             ProductoDAO dao = new ProductoDAO();
 
             if (dao.agregarProducto(productos)) {
-                JOptionPane.showMessageDialog(this, "Producto guardado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Producto guardado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(this, "Error al guardar el producto", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Cantidad y precio deben ser valores numéricos.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Cantidad y precio deben ser valores numericos.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+
 public class gestionInventario extends JFrame {
     private JPanel panelPrincipal;
     private JMenuBar menuBar;
@@ -32,7 +33,7 @@ public class gestionInventario extends JFrame {
         panelFondo = new ImagenFondo("imagenes/almacen.jpeg"); 
         panelFondo.setLayout(new BorderLayout());
 
-        JLabel jLabel1 = new JLabel("Gestión de Inventario", SwingConstants.CENTER);
+        JLabel jLabel1 = new JLabel("Gestion de Inventario", SwingConstants.CENTER);
         jLabel1.setFont(new Font("Segoe UI Light", Font.BOLD, 36));
         jLabel1.setForeground(Color.BLACK);
         panelFondo.add(jLabel1, BorderLayout.NORTH);

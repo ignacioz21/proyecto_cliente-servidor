@@ -17,7 +17,7 @@ public class loginAdministrador extends JFrame {
     private JButton btnIniciar;
 
     public loginAdministrador() {
-        setTitle("Plataforma de tienda en Linea - Acceso Admin ");
+        setTitle("Plataforma de Ventas en Linea - Administrador ");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 500);
         setLocationRelativeTo(null);
@@ -90,7 +90,7 @@ public class loginAdministrador extends JFrame {
                 Usuario admin = clienteController.obtenerUsuarioPorId(adminUsuario);
                 Empleado existe = empleadoController.verificarSesion(admin);
                 if (existe.isEstado() && existe.getCargo().equals("Administrador")) {
-                    JOptionPane.showMessageDialog(this, "Bienvenido " + admin.getNombre(), "Inicio de Sesión", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Bienvenido " + admin.getNombre(), "Inicio de Sesion", JOptionPane.INFORMATION_MESSAGE);
                     abrirAdmin(evt);
                 }else{
                     JOptionPane.showMessageDialog(this, "Usuario no encontrado", "Error", JOptionPane.ERROR_MESSAGE);

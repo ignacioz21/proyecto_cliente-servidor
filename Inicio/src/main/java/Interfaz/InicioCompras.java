@@ -16,7 +16,7 @@ import ClasesModelos.Productos;
 import Cliente.ClienteController;
 
 public class InicioCompras extends JFrame {
-    private List<Productos> catalogoProductos; 
+    private List<Productos> catalogoProductos;
     private JPanel panelProductos;
     private JComboBox<String> filtroCategoria;
     private JComboBox<String> filtroPrecio;
@@ -45,53 +45,94 @@ public class InicioCompras extends JFrame {
 
         List<Categoria> categorias = clienteController.obtenerCategorias();
         String[] categoriasArray = new String[categorias.size()];
-
         for (int i = 0; i < categorias.size(); i++) {
             categoriasArray[i] = categorias.get(i).getNombre();
         }
+
         filtroCategoria = new JComboBox<>(categoriasArray);
         panelFiltros.add(new JLabel("Categoria:"));
         panelFiltros.add(filtroCategoria);
-        
+
         String[] rangosPrecio = {"Todos", "Menos de $500", "de $500 a $1000", "Mas de $1000"};
         filtroPrecio = new JComboBox<>(rangosPrecio);
         panelFiltros.add(new JLabel("Precio:"));
         panelFiltros.add(filtroPrecio);
-        
+
         filtroDisponibilidad = new JCheckBox("Solo disponibles");
         panelFiltros.add(filtroDisponibilidad);
-        
+
         JButton btnAplicarFiltros = new JButton("Aplicar Filtros");
         btnAplicarFiltros.addActionListener(e -> aplicarFiltros());
         panelFiltros.add(btnAplicarFiltros);
-        
+
         add(panelFiltros, BorderLayout.NORTH);
     }
-
 
     private void panelProductos() {
         panelProductos = new JPanel();
         panelProductos.setLayout(new GridLayout(0, 3, 10, 10));
-        
+
         mostrarProductos(catalogoProductos);
-        
+
         JScrollPane scrollPane = new JScrollPane(panelProductos);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         add(scrollPane, BorderLayout.CENTER);
     }
 
     private void mostrarProductos(List<Productos> productos) {
         panelProductos.removeAll();
-        
+
         for (Productos producto : productos) {
             JPanel panelProducto = new JPanel();
             panelProducto.setLayout(new BorderLayout());
             panelProducto.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
+             JPanel imagePanel = new JPanel() {
+                @Override
+                public Dimension getPreferredSize() {
+                    int width = getWidth();
+                    return new Dimension(width, width);
+                }
+            };
+            imagePanel.setLayout(new BorderLayout());
+            
+          
+            ImageIcon originalIcon = new ImageIcon("imagenes/imagenElectronicos.jpeg");
+            JLabel lblImagen = new JLabel() {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                   
+                    if (originalIcon.getImage() != null) {
+                        g.drawImage(originalIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
+                    }
+                }
+            };
+            
+          
+            lblImagen.setPreferredSize(new Dimension(150, 150));
+            imagePanel.add(lblImagen, BorderLayout.CENTER);
+            
+            
+            panelProducto.add(imagePanel, BorderLayout.NORTH);
+            
+          
+           
             
             JLabel lblNombre = new JLabel(producto.getNombre());
             JLabel lblPrecio = new JLabel(String.format("$%.2f", producto.getPrecio()));
             JLabel lblDescripcion = new JLabel(producto.getDescripcion());
             JLabel lblCategoria = new JLabel("Categoria: " + producto.getCategoria());
-            
+
+            JPanel infoPanel = new JPanel();
+            infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+            infoPanel.add(lblNombre);
+            infoPanel.add(lblPrecio);
+            infoPanel.add(lblDescripcion);
+            infoPanel.add(lblCategoria);
+
+            panelProducto.add(infoPanel, BorderLayout.CENTER);
+
             JButton btnVerDetalles = new JButton("Ver Detalles");
             btnVerDetalles.addActionListener(e -> {
                 if (producto.getStockActual() > 0) {
@@ -101,30 +142,19 @@ public class InicioCompras extends JFrame {
                     JOptionPane.showMessageDialog(this, "Producto agotado");
                 }
             });
-            
-            JPanel infoPanel = new JPanel();
-            infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
-            infoPanel.add(lblNombre);
-            infoPanel.add(lblPrecio);
-            infoPanel.add(lblDescripcion);
-            infoPanel.add(lblCategoria);
-            
-            panelProducto.add(infoPanel, BorderLayout.CENTER);
+
             panelProducto.add(btnVerDetalles, BorderLayout.SOUTH);
-            
+
             panelProductos.add(panelProducto);
         }
-        
+
         panelProductos.revalidate();
         panelProductos.repaint();
     }
 
     private void crearBotonCarrito() {
         JButton btnCarrito = new JButton("Ver Carrito");
-        btnCarrito.addActionListener(e -> {
-            ProductoDetalles.mostrarCarrito();
-        });
-        
+        btnCarrito.addActionListener(e -> ProductoDetalles.mostrarCarrito());
         add(btnCarrito, BorderLayout.SOUTH);
     }
 
@@ -149,6 +179,7 @@ public class InicioCompras extends JFrame {
                 })
                 .filter(producto -> !soloDisponibles || producto.isEstado())
                 .collect(Collectors.toList());
+
         mostrarProductos(productosFiltrados);
     }
 
