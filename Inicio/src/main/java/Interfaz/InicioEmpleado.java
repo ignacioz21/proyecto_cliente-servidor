@@ -31,7 +31,7 @@ public class InicioEmpleado extends JFrame {
     }
 
     private void iniciarInterfaz() {
-        panelFondo = new ImagenFondo("imagenes/fondoEmpleado.jpeg");
+        panelFondo = new ImagenFondo("imagenes/empleadoLogin.jpeg");
         panelFondo.setLayout(new BorderLayout());
 
        

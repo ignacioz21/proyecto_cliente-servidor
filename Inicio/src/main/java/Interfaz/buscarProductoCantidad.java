@@ -10,10 +10,8 @@ package Interfaz;
  */
 import ClasesModelos.Productos;
 import Cliente.ClienteController;
-
 import javax.swing.*;
 import java.awt.*;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -23,29 +21,29 @@ class buscarProductoCantidad extends JFrame {
     private JButton btnBuscar, btnCancelar;
 
     public buscarProductoCantidad() {
-        setTitle("Buscar Producto por Cantidad");
+        setTitle("Buscar Producto para modificar Cantidad");
         setSize(600, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
-        initComponents();
+       interfazCantidad();
     }
 
-    private void initComponents() {
+    private void interfazCantidad() {
         panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new BorderLayout());
         panelPrincipal.setBackground(new Color(220, 220, 220));
 
-        // Panel de título
+       
         JPanel panelTitulo = new JPanel();
-        panelTitulo.setBackground(new Color(128, 0, 128)); // Color morado
+        panelTitulo.setBackground(new Color(128, 0, 128));
         JLabel lblTitulo = new JLabel("Buscar Producto para cambio de Cantidad", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Segoe UI Light", Font.BOLD, 24));
         lblTitulo.setForeground(Color.WHITE);
         panelTitulo.add(lblTitulo);
         panelPrincipal.add(panelTitulo, BorderLayout.NORTH);
 
-        // Panel central
+       
         JPanel panelCentral = new JPanel();
         panelCentral.setLayout(null);
         panelCentral.setBackground(new Color(220, 220, 220));
@@ -62,7 +60,7 @@ class buscarProductoCantidad extends JFrame {
         btnBuscar = new JButton("Buscar");
         btnBuscar.setFont(new Font("Segoe UI", Font.BOLD, 16));
         btnBuscar.setBounds(200, 150, 130, 40);
-        btnBuscar.setBackground(new Color(128, 0, 128)); // Color morado
+        btnBuscar.setBackground(new Color(128, 0, 128)); 
         btnBuscar.setForeground(Color.WHITE);
         btnBuscar.addActionListener(e -> {
             String nombreProducto = txtNombreProducto.getText().trim();
@@ -74,13 +72,11 @@ class buscarProductoCantidad extends JFrame {
                     pedirNuevaCantidad(productos.getNombre());
                 } else {
                     JOptionPane.showMessageDialog(this,
-                            "Producto no encontrado.",
-                            "Error", JOptionPane.ERROR_MESSAGE);
+                            "Producto no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(this,
-                        "Por favor, ingrese el nombre del producto.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                        "Por favor, ingrese el nombre del producto.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
         panelCentral.add(btnBuscar);
@@ -104,17 +100,14 @@ class buscarProductoCantidad extends JFrame {
                 ClienteController clienteController = new ClienteController();
                 clienteController.actualizarStockProducto(productos);
                 JOptionPane.showMessageDialog(this,
-                        "Cantidad actualizada correctamente.",
-                        "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                        "Cantidad actualizada correctamente.", "Exito", JOptionPane.INFORMATION_MESSAGE);
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, 
-                        "Por favor, ingrese un número válido.", 
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                        "Por favor, ingrese un número valido.",  "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(this, 
-                    "La cantidad no puede estar vacía.", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                    "La cantidad no puede estar vacia.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

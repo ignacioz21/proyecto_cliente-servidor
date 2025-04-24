@@ -28,8 +28,6 @@ public class loginEmpleado extends JFrame {
    
    
     
-    
-    //Aqui se llamaria al empleado con get y set como en loginCliente
 
     public loginEmpleado() {
         setTitle("Plataforma de tienda en Linea - Acceso Empleado/Proveedor");
@@ -104,7 +102,7 @@ public class loginEmpleado extends JFrame {
                 Usuario admin = clienteController.obtenerUsuarioPorId(empleadoUsuario);
                 Empleado existe = empleadoController.verificarSesion(admin);
                 if (existe.isEstado()) {
-                    JOptionPane.showMessageDialog(this, "Bienvenido " + admin.getNombre(), "Inicio de Sesión", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Bienvenido " + admin.getNombre(), "Inicio de Sesion", JOptionPane.INFORMATION_MESSAGE);
                     abrirEmpleado(evt);
                 }else{
                     JOptionPane.showMessageDialog(this, "Usuario no encontrado", "Error", JOptionPane.ERROR_MESSAGE);

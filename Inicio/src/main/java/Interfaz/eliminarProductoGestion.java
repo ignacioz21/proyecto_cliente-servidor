@@ -6,23 +6,27 @@ package Interfaz;
 
 import ClasesModelos.Productos;
 import Cliente.ClienteController;
+import java.awt.BorderLayout;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 /**
  *
  * @author XPC
  */
-import javax.swing.*;
-import java.awt.*;
-
 class eliminarProductoGestion extends JFrame {
+
     private JPanel panelPrincipal;
     private JTextField txtNombreProducto;
     private JButton btnBuscar, btnCancelar;
@@ -33,24 +37,22 @@ class eliminarProductoGestion extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
-        initComponents();
+        interfazEliminarProducto();
     }
 
-    private void initComponents() {
+    private void interfazEliminarProducto() {
         panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new BorderLayout());
         panelPrincipal.setBackground(new Color(220, 220, 220));
 
-        // Panel de título
         JPanel panelTitulo = new JPanel();
-        panelTitulo.setBackground(new Color(255, 204, 0)); // Color amarillo
+        panelTitulo.setBackground(new Color(255, 204, 0));
         JLabel lblTitulo = new JLabel("Eliminar Producto", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Segoe UI Light", Font.BOLD, 24));
         lblTitulo.setForeground(Color.BLACK);
         panelTitulo.add(lblTitulo);
         panelPrincipal.add(panelTitulo, BorderLayout.NORTH);
 
-        // Panel central
         JPanel panelCentral = new JPanel();
         panelCentral.setLayout(null);
         panelCentral.setBackground(new Color(220, 220, 220));
@@ -67,24 +69,15 @@ class eliminarProductoGestion extends JFrame {
         btnBuscar = new JButton("Eliminar");
         btnBuscar.setFont(new Font("Segoe UI", Font.BOLD, 16));
         btnBuscar.setBounds(200, 150, 130, 40);
-        btnBuscar.setBackground(new Color(255, 204, 0)); // Color amarillo
+        btnBuscar.setBackground(new Color(255, 204, 0));
         btnBuscar.setForeground(Color.BLACK);
         btnBuscar.addActionListener(e -> eliminarProducto());
         panelCentral.add(btnBuscar);
 
-        btnCancelar = new JButton("Cancelar");
-        btnCancelar.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        btnCancelar.setBounds(350, 150, 130, 40);
-        btnCancelar.setBackground(new Color(220, 220, 220));
-        btnCancelar.setForeground(Color.BLACK);
-        btnCancelar.addActionListener(e -> dispose());
-        panelCentral.add(btnCancelar);
-
         panelPrincipal.add(panelCentral, BorderLayout.CENTER);
 
-        // Panel lateral derecho
         JPanel panelDerecho = new JPanel();
-        panelDerecho.setBackground(new Color(255, 215, 0)); // Amarillo dorado
+        panelDerecho.setBackground(new Color(255, 215, 0));
         panelDerecho.setPreferredSize(new Dimension(100, 0));
         panelPrincipal.add(panelDerecho, BorderLayout.EAST);
 
@@ -97,32 +90,27 @@ class eliminarProductoGestion extends JFrame {
             ClienteController clienteController = new ClienteController();
             Productos productos = new Productos();
             productos.setNombre(nombreProducto);
-            if (clienteController.buscarProducto(productos)){
+            if (clienteController.buscarProducto(productos)) {
                 int confirm = JOptionPane.showConfirmDialog(this,
-                        "¿Está seguro de que desea eliminar el producto " + nombreProducto + "?",
-                        "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+                        "¿Esta seguro de que desea eliminar el producto " + nombreProducto + "?", "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
-                    // Lógica para eliminar el producto de la base de datos
+
                     if (eliminarProductoDeBD(productos)) {
                         JOptionPane.showMessageDialog(this,
-                                "Producto eliminado correctamente.",
-                                "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                        dispose(); // Cierra la ventana actual
+                                "Producto eliminado correctamente.", "Exito", JOptionPane.INFORMATION_MESSAGE);
+                        dispose();
                     } else {
                         JOptionPane.showMessageDialog(this,
-                                "Error al eliminar el producto.",
-                                "Error", JOptionPane.ERROR_MESSAGE);
+                                "Error al eliminar el producto.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             } else {
                 JOptionPane.showMessageDialog(this,
-                        "Producto no encontrado.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                        "Producto no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(this,
-                    "Por favor, ingrese el nombre del producto.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                    "Por favor, ingrese el nombre del producto.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

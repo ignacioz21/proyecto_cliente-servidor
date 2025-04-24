@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class controlInventario extends JFrame {
+
     private List<Productos> catalogoProductos;
     private JPanel panelProductos;
     private JComboBox<String> filtroCategoria;
@@ -54,10 +55,10 @@ public class controlInventario extends JFrame {
         }
 
         filtroCategoria = new JComboBox<>(categoriasArray);
-        panelFiltros.add(new JLabel("Categoría:"));
+        panelFiltros.add(new JLabel("Categoria:"));
         panelFiltros.add(filtroCategoria);
 
-        String[] rangosPrecio = {"Todos", "Menos de $500", "de $500 a $1000", "Más de $1000"};
+        String[] rangosPrecio = {"Todos", "Menos de $500", "de $500 a $1000", "Mas de $1000"};
         filtroPrecio = new JComboBox<>(rangosPrecio);
         panelFiltros.add(new JLabel("Precio:"));
         panelFiltros.add(filtroPrecio);
@@ -79,6 +80,7 @@ public class controlInventario extends JFrame {
         mostrarProductos(catalogoProductos);
 
         JScrollPane scrollPane = new JScrollPane(panelProductos);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         add(scrollPane, BorderLayout.CENTER);
     }
 
@@ -89,11 +91,41 @@ public class controlInventario extends JFrame {
             JPanel panelProducto = new JPanel();
             panelProducto.setLayout(new BorderLayout());
             panelProducto.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+            
+            JPanel imagePanel = new JPanel() {
+                @Override
+                public Dimension getPreferredSize() {
+                    int width = getWidth();
+                    return new Dimension(width, width);
+                }
+            };
+            imagePanel.setLayout(new BorderLayout());
+            
+          
+            ImageIcon originalIcon = new ImageIcon("imagenes/imagenElectronicos.jpeg");
+            JLabel lblImagen = new JLabel() {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                   
+                    if (originalIcon.getImage() != null) {
+                        g.drawImage(originalIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
+                    }
+                }
+            };
+            
+          
+            lblImagen.setPreferredSize(new Dimension(150, 150));
+            imagePanel.add(lblImagen, BorderLayout.CENTER);
+            
+            
+            panelProducto.add(imagePanel, BorderLayout.NORTH);
+            
 
             JLabel lblNombre = new JLabel(producto.getNombre());
             JLabel lblPrecio = new JLabel(String.format("$%.2f", producto.getPrecio()));
             JLabel lblDescripcion = new JLabel(producto.getDescripcion());
-            JLabel lblCategoria = new JLabel("Categoría: " + producto.getCategoria());
+            JLabel lblCategoria = new JLabel("Categoria: " + producto.getCategoria());
             JLabel lblStock = new JLabel("Stock actual: " + producto.getStockActual());
 
             JPanel infoPanel = new JPanel();

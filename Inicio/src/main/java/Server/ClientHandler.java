@@ -61,10 +61,10 @@ public class ClientHandler implements Runnable{
                     Usuario creado = usuarioController.agregarUsuario(usuario);
                     return new Response("Usuario creado con exito", creado, true);
                 case "ACTUALIZAR_USUARIO":
-                    // Lógica para actualizar un usuario
+                   
                     break;
                 case "ELIMINAR_USUARIO":
-                    // Lógica para eliminar un usuario
+                   
                     break;
                 case "VALIDAR_USUARIO":
                     Usuario usuarioValidar = (Usuario) request.getData();

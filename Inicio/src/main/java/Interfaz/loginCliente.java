@@ -17,7 +17,6 @@ public class loginCliente extends JFrame {
     private JPanel panelPrincipal;
     private JTextField txtUsuario;
     private JPasswordField txtContrasena;
-    private JCheckBox botonRecordar;
     private JButton btnIniciar;
     private JButton btnRegistro;
     String nombre, contrasena;
@@ -80,12 +79,6 @@ public class loginCliente extends JFrame {
         txtContrasena.setBounds(250, 150, 300, 30);
         panelCentral.add(lblContrasena);
         panelCentral.add(txtContrasena);
-
-        botonRecordar = new JCheckBox("Recordar Contrasena");
-        botonRecordar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        botonRecordar.setBounds(250, 190, 200, 30);
-        botonRecordar.setBackground(new Color(0, 51, 204));
-        panelCentral.add(botonRecordar);
 
         btnIniciar = new JButton("Iniciar Sesion");
         btnIniciar.setFont(new Font("Segoe UI", Font.BOLD, 16));
