@@ -88,8 +88,12 @@ public class ClientHandler implements Runnable{
                     return new Response("ID de usuario obtenido con éxito", idUsuario, true);
                 case "CREAR_PRODUCTO":
                     Productos producto = (Productos) request.getData();
-                    Productos productoCreado = productoController.agregarProducto(producto);
-                    return new Response("Producto creado con exito", productoCreado, true);
+                    boolean productoCreado = productoController.agregarProducto(producto);
+                    if (productoCreado) {
+                        return new Response("Producto creado con éxito", producto, true);
+                    } else {
+                        return new Response("Error al crear el producto", null, false);
+                    }
                 case "OBTENER_PRODUCTOS":
                     List<Productos> productos = productoController.obtenerProductos();
                     return new Response("Lista de productos obtenida", productos, true);
@@ -125,9 +129,15 @@ public class ClientHandler implements Runnable{
                     Categoria categoria = (Categoria) request.getData();
                     Categoria categoriaCreada = categoriaController.agregarCategoria(categoria);
                     return new Response("Categoria creada con exito", categoriaCreada, true);
-                case "ACTUALIZAR_CATEGORIA":
-                    // Lógica para actualizar una categoría
-                    break;
+                case "OBTENER_CATEGORIA_ID":
+                    Categoria categoriaId = (Categoria) request.getData();
+                    Categoria categoriaObtenida = categoriaController.buscarCategoriaId(categoriaId);
+                    if (categoriaObtenida != null) {
+                        return new Response("Categoria encontrada", categoriaObtenida, true);
+                    } else {
+                        return new Response("Categoria no encontrada", null, false);
+                    }
+
                 case "OBTENER_CATEGORIAS":
                     List<Categoria> categorias = categoriaController.obtenerCategorias();
                     return new Response("Lista de categorias obtenida", categorias, true);

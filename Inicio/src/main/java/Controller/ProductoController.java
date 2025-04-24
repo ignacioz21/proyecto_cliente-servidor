@@ -8,7 +8,7 @@ import java.util.List;
 public class ProductoController {
     private ProductoDAO productoDAO;
 
-    public Productos agregarProducto(Productos producto) {
+    public boolean agregarProducto(Productos producto) {
         productoDAO = new ProductoDAO();
         return productoDAO.agregarProducto(producto);
     }

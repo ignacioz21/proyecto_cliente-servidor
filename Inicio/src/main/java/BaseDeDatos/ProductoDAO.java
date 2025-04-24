@@ -13,40 +13,21 @@ import java.util.List;
 
 public class ProductoDAO {
 
-    public Productos agregarProducto(Productos nuevoProducto) {
-        String sql = "INSERT INTO productos (nombre, descripcion, id_categoria, id_proveedor," +
-                " precio, precio_promocional, stock_actual, stock_minimo, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        String sqlID = "SELECT id_producto FROM productos WHERE nombre = ?";
-
+    public boolean agregarProducto (Productos productos) {
+        String sql = "INSERT INTO productos (nombre, id_categoria, descripcion, stock_actual, precio) VALUES (?, ?, ?, ?, ?)";
         try (Connection conex = ConexionDB.getConexion(); PreparedStatement pstmt = conex.prepareStatement(sql)) {
-            pstmt.setString(1, nuevoProducto.getNombre());
-            pstmt.setString(2, nuevoProducto.getDescripcion());
-            pstmt.setInt(3, nuevoProducto.getIdCategoria());
-            pstmt.setInt(4, nuevoProducto.getIdProveedor());
-            pstmt.setFloat(5, nuevoProducto.getPrecio());
-            pstmt.setFloat(6, nuevoProducto.getPrecioPromocional());
-            pstmt.setInt(7, nuevoProducto.getStockActual());
-            pstmt.setInt(8, nuevoProducto.getStockMinimo());
-            pstmt.setBoolean(9, nuevoProducto.isEstado());
+            pstmt.setString(1, productos.getNombre());
+            pstmt.setInt(2, productos.getIdCategoria());
+            pstmt.setString(3, productos.getDescripcion());
+            pstmt.setInt(4, productos.getStockActual());
+            pstmt.setFloat(5, productos.getPrecio());
             pstmt.executeUpdate();
-            System.out.println("Producto agregado correctamente");
+            System.out.println("Producto registrado con exito");
+            return true;
         } catch (SQLException e) {
-            System.out.println("Error al agregar el producto: " + nuevoProducto.getNombre() + "\nError: " + e.getMessage());
+            System.out.println("Error al crear el producto: " + e.getMessage());
         }
-
-        try (Connection conex = ConexionDB.getConexion(); PreparedStatement pstmt = conex.prepareStatement(sqlID)) {
-            pstmt.setString(1, nuevoProducto.getNombre());
-            ResultSet rs = pstmt.executeQuery();
-            if(rs.next()) {
-                nuevoProducto.setIdProducto(rs.getInt("id_producto"));
-            }
-            System.out.println("ID otorgado correctamente al producto: " + nuevoProducto.getNombre());
-            return nuevoProducto;
-        } catch (SQLException e) {
-            System.out.println("Error al dar el ID al producto: " + nuevoProducto.getNombre());
-            System.out.println("ERROR: " + e.getMessage());
-        }
-        return null;
+        return false;
     }
 
     public List<Productos> mostrarProductos() {
